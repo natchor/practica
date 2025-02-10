@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getUser } from '@/Servicios/apiService';
+import { getUsers } from '@/Servicios/apiService';
 import './styles/mobileExtractor.css';
 
 interface UserData {
@@ -17,7 +17,7 @@ const MobileExtractor = () => {
       setLoading(true);
       setError(null);
       try {
-        const userData = await getUser(''); // Puedes ajustar el parámetro según sea necesario
+        const userData = await getUsers(); // Puedes ajustar el parámetro según sea necesario
         setData(userData);
       } catch (error) {
         setError('Error fetching user data');
