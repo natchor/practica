@@ -71,6 +71,8 @@ const Extractor = () => {
 
   const handleSelectUser = (user: UserData) => {
     setSelectedUser(user);
+    setSearchTerm('');
+    setFilteredUsers([]);
   };
 
   const handleGenerateQR = () => {
@@ -103,28 +105,28 @@ const Extractor = () => {
         <button onClick={handleRefresh} className="custom-button bg-gray-500 text-white px-4 py-2 rounded">
           Refrescar
         </button>
+        {searchTerm && (
+          <div className="data-container">
+            {filteredUsers.length > 0 ? (
+              <ul className="user-list">
+                {filteredUsers.map(user => (
+                  <li key={user.id} onClick={() => handleSelectUser(user)} className="user-item">
+                    {user.name}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className="no-data">No se encontraron datos</div>
+            )}
+          </div>
+        )}
       </div>
 
       {loading && <div className="loading">Cargando...</div>}
       {error && <div className="error text-red-500">Error: {error}</div>}
 
-      <div className="data-container">
-        <h2 className="text-2xl font-bold mb-4">Resultados de la Búsqueda</h2>
-        {filteredUsers.length > 0 ? (
-          <ul className="user-list">
-            {filteredUsers.map(user => (
-              <li key={user.id} onClick={() => handleSelectUser(user)} className="user-item">
-                {user.name}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <div className="no-data">No se encontraron datos</div>
-        )}
-      </div>
-
       {selectedUser && (
-        <div className="user-details mt-4">
+        <div className="user-details mt-4 p-4 border border-gray-300 rounded bg-white shadow-md">
           <h2 className="text-2xl font-bold mb-4">Detalles del Usuario</h2>
           <p><strong>Nombre:</strong> {selectedUser.name}</p>
           <p><strong>Username:</strong> {selectedUser.username}</p>

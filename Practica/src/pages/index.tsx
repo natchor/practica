@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import LoginPage from './administracion/Login';
+import LoginPage from './administracion/login';
 
 const Page = () => {
   return (

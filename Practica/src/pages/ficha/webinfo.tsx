@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getUserById } from '@/Servicios/apiService';
+import '../styles/web.css';
 
 interface UserData {
   id: number;
@@ -49,13 +50,13 @@ const UserPage = () => {
   }, [id]);
 
   return (
-    <div className="user-container mx-auto p-4">
+    <div className="user-container">
       {loading && <div className="loading">Cargando...</div>}
-      {error && <div className="error text-red-500">Error: {error}</div>}
+      {error && <div className="error">Error: {error}</div>}
 
       {user && (
-        <div className="user-details mt-4">
-          <h2 className="text-2xl font-bold mb-4">Detalles del Usuario</h2>
+        <div className="user-details">
+          <h2>Detalles del Usuario</h2>
           <p><strong>Nombre:</strong> {user.name}</p>
           <p><strong>Username:</strong> {user.username}</p>
           <p><strong>Email:</strong> {user.email}</p>
