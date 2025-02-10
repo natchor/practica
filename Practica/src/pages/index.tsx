@@ -1,12 +1,13 @@
 // page.tsx
 
 import React from 'react';
-import Login from './administracion/Login'
+
+import LoginPage from './administracion/Login';
 
 const Page = () => {
   return (
     <div>
-      <Login />
+      <LoginPage />
     </div>
   );
 };
