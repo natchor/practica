@@ -1,7 +1,7 @@
 // page.tsx
 
 import React from 'react';
-import Login from './administracion/Login';
+import Login from './administracion/Login'
 
 const Page = () => {
   return (
