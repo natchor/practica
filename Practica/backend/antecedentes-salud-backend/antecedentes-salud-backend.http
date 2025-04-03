@@ -1,0 +1,6 @@
+@antecedentes_salud_backend_HostAddress = http://localhost:5056
+
+GET {{antecedentes_salud_backend_HostAddress}}/api/Ficha
+Accept: application/json
+
+###
