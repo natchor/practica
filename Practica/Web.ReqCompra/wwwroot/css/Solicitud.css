@@ -1,0 +1,112 @@
+﻿body {
+}
+
+/* Clase que tendra el tooltip */
+.cssToolTip {
+    position: relative;    
+}
+
+    /* El tooltip */
+
+    .cssToolTip span {
+        background: rgba(20,20,20,0.9) center left 5px no-repeat;
+        border-radius: 5px;
+        box-shadow: 5px 5px 5px #333;
+        color: #ffffff;
+        /*color: #87cefa;*/
+        display: none; /* El tooltip por defecto estara oculto */
+        font-size: 0.8em;
+        padding: 15px 15px 15px 15px;
+        max-width: 6000px;
+        position: absolute; /* El tooltip se posiciona de forma absoluta para no modificar el aspexto del resto de la pagina */
+        top: -25px;
+        left: 100px;
+        z-index: 100;
+        float: right;
+    }
+
+    .cssToolTip:hover span {
+        display: inline; /* Para mostrarlo simplemente usamos display block o inline */
+    }
+
+div.etiqueta {
+    width: 70px;
+    height: 40px;
+    color: white;
+    font-weight: bold;
+    -webkit-transition: width 1s, background 1s;
+    -moz-transition: width 1s, background 1s;
+    -o-transition: width 1s, background 1s;
+    transition: width 1s, background 1s;
+    padding: 10px;
+    margin: 1px;
+    border-radius: 6px;
+    float: left;
+    margin-left: 60%;
+    transition: transform .5s;
+    -webkit-transition-timing-function: ease;
+    -moz-transition-timing-function: ease;
+    -o-transition-timing-function: ease;
+    transition-timing-function: ease;
+}
+
+
+
+
+#div2 {
+    background: Goldenrod;
+    width: 69px;
+    -webkit-transition-timing-function: linear;
+    -moz-transition-timing-function: linear;
+    -o-transition-timing-function: linear;
+    transition-timing-function: linear;
+    height: auto;
+}
+
+#div1 {
+    background: SteelBlue;
+    width: 150px;
+    height:auto;
+}
+
+
+div.b {
+    font-size: 11px;
+}
+
+#div3 {
+    width: 80px;
+    background: tomato;
+    -webkit-transition-timing-function: ease-in;
+    -moz-transition-timing-function: ease-in;
+    -o-transition-timing-function: ease-in;
+    transition-timing-function: ease-in;
+    height: auto;
+}
+
+#div4 {
+    width: 120px;
+    background: LightCoral;
+    -webkit-transition-timing-function: ease-out;
+    -moz-transition-timing-function: ease-out;
+    -o-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+    height: auto;
+}
+
+#div5 {
+    background: HotPink;
+    -webkit-transition-timing-function: ease-in-out;
+    -moz-transition-timing-function: ease-in-out;
+    -o-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out;
+    height: auto;
+}
+
+div.etiqueta:hover {
+    box-shadow: 4px 4px 4px 0 rgba(0,0,0,0.2);
+    -ms-transform: scale(1.2); /* IE 9 */
+    -webkit-transform: scale(1.2); /* Safari 3-8 */
+    transform: scale(1.2);
+}
+

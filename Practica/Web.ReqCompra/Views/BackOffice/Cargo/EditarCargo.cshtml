@@ -1,0 +1,68 @@
+﻿@model CargoModel;
+@{
+    ViewData["Title"] = "Cargo";
+}
+
+
+<div class="container">
+    <div class="card bg-light text-dark">
+        <div class="card-body">
+            <h5 class="card-title">@ViewBag.Titulo</h5>
+            <br />
+            <input id="CargoId" name="CargoId" type="hidden" value="@ViewBag.Id" />
+            <div class="row">
+                <div class="col-sm-6">
+                    <label asp-for="Nombre"><b>Nombre</b></label>
+                    <input class="form-control" type="text" id="txtNombre" placeholder="Nombre">
+                </div>
+                <!--
+                    <div class="form-group">
+                        <label asp-for="Estado"><b>Estado</b></label>
+                        <select asp-for="Estado" class="form-control" id="txtEstado">
+                            <option value="1">Activo</option>
+                            <option value="0">Inactivo</option>
+                        </select>
+                    </div>
+                -->
+
+            </div>
+
+
+            <br />
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-sm-11">
+            <button type="button" id="btnCargoEditar" class="btn btn-primary">@ViewBag.Titulo</button>
+            <button type="button" id="btnRegresarCargo" class="btn btn-outline-secondary">Regresar</button>
+
+        </div>
+
+
+    </div>
+    <br />
+    @*</form>*@
+</div>
+@section Scripts{
+    <script>
+        EditaCargo = function () {
+
+            $(document).ready(function () {
+                $('#divIndicadoresEconomicos').css('display', 'none');
+                $('#divIndicadoresEconomicos').hide();
+            });
+
+
+            return {
+                urlPostCargar: "@Url.Action(nameof(Web.ReqCompra.Controllers.BackOfficeController.PostCargar), "BackOffice")",
+                urlPostGrabar: "@Url.Action(nameof(Web.ReqCompra.Controllers.BackOfficeController.PostGrabarCargo), "BackOffice")",
+
+            }
+
+        }();
+
+    </script>
+    <script type="text/javascript" src="~/js/BackOffice/_EditarCargo.js " asp-append-version="true"></script>
+}

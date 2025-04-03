@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+	<PackageReference Include="ceTe.DynamicPDF.Converter.NET" Version="3.22.0" />
+	<PackageReference Include="ceTe.DynamicPDF.CoreSuite.NET" Version="12.10.0" />
+	<PackageReference Include="ceTe.DynamicPDF.HtmlConverter.NET" Version="1.13.0" />
+	<PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+	<PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.2.0" />
+	<PackageReference Include="Select.HtmlToPdf.NetCore" Version="23.1.0" />
+	<PackageReference Include="MailKit" Version="2.11.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Biblioteca\Biblioteca.csproj" />
+    <ProjectReference Include="..\Dato\Dato.csproj" />
+    <ProjectReference Include="..\Entidad.Interfaz\Entidad.Interfaz.csproj" />
+  </ItemGroup>
+
+</Project>

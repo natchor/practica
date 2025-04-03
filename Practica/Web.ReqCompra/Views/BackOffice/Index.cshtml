@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Mantenedores";
+}
+
+<div class="d-flex justify-content-around flex-wrap flex-md-nowrap align-items-md-start pt-3 pb-2 mb-3 border-bottom text-md-start">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="card bg-light text-dark">
+                    <div class="card-body">
+                        <h5 class="card-title">Mantenedores</h5>
+                        <br />
+                        <p id="menuid">
+                            <a class="reqcompra" asp-controller="BackOffice" asp-action="Cargo"><i class="fa fa-id-card" aria-hidden="true"></i> Cargo</a><br />
+                            <a class="reqcompra" asp-controller="BackOffice" asp-action="Rol"><i class="fa fa-address-card" aria-hidden="true"></i> Rol</a><br />
+                            <a class="reqcompra" asp-controller="BackOffice" asp-action="Estado"><i class="fa fa-file-alt"></i> Estado</a><br />
+                            <a class="reqcompra" asp-controller="Usuario" asp-action="Index"><i class="fa fa-users" aria-hidden="true"></i> Usuario</a><br />
+                            <a class="reqcompra" asp-controller="BackOffice" asp-action="Concepto"><i class="fa fa-newspaper" aria-hidden="true"></i> Concepto Presupuestario</a><br />
+                            <a class="reqcompra" asp-controller="BackOffice" asp-action="Programa"><i class="fa fa-tasks" aria-hidden="true"></i> Programa Presupuestario</a><br />
+                            <a class="reqcompra" asp-controller="BackOffice" asp-action="Compra"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Tipo de Compra</a><br />
+                            <a class="reqcompra" asp-controller="BackOffice" asp-action="Moneda"><i class="fa fa-coins" aria-hidden="true"></i> Tipo de Moneda</a><br />
+                            <a class="reqcompra" asp-controller="BackOffice" asp-action="Sector"><i class="fa fa-sitemap"></i> Sector</a><br />
+                            <a class="reqcompra" asp-controller="BackOffice" asp-action="System"><i class="fa fa-calendar" aria-hidden="true"></i> Cambio de Año y CDP</a><br />
+                           
+                            
+                        </p>
+
+                    </div>
+                </div>
+                <br />
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modals"></div>
+
+
+@section Scripts{
+    <script>
+
+        Index = function () {
+
+            $(document).ready(function () {
+
+                $('#divIndicadoresEconomicos').css('display', 'none');
+                $('#divIndicadoresEconomicos').hide();
+            });
+
+
+            return {
+       
+            }
+
+        }();
+
+    </script>
+}

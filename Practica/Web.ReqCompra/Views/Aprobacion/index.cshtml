@@ -1,0 +1,127 @@
+﻿@{
+    ViewData["Title"] = "Matriz de aprobación";
+}
+
+<div class="row">
+    <div class="col-3">
+        <input class="form-control" maxlength="12" id="solicitudBuscarId" data-toggle="tooltip" data-placement="top" title="Ingrese número y año de solicitud los 0 son opcionales" value="@DateTime.Now.Year - 0" >
+    </div>
+    <div class="col-1"> <input type="button" value="Buscar Solicitud" class="btn btn-outline-success btn-lg" id="btnAprobacionId"></div>
+    <div class="col-1"> </div>
+
+    <div class="col-1"> <input type="button" value="Nueva Aprobación" class="btn btn-outline-primary btn-lg" id="btnCreaAprobacionId"></div>
+
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="divAprobacion"></div>
+            @*<div id="divSolicitudes">
+                    <partial name="Shared/Tablas/_TablaMisAprobaciones" />
+                </div>*@
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="MdlEditarAprobacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 100%">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Crear Aprobación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input class="form-control" type="hidden" id="hdnId">
+                <input class="form-control" type="hidden" id="hdnSolicitudId">
+                <input class="form-control" type="hidden" id="hdnUserAprobadorId">
+                <div class="form-group">
+                    <label><b>Aprobacion</b> </label>
+                    <select class="form-control" id="txtAprobacionId" required>
+                    </select>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label><b>Usuario Aprobador</b> </label>
+                    <select class="form-control" id="txtUserAprobadorId" required>
+                    </select>
+                </div>
+
+                <div class="form-group" style="display: none;">
+                    <label><b>Usuario Aprobador</b> </label>
+                    <select class="form-control" id="txtUserAprobadorId2" required>
+                    </select>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label><b>Orden</b> </label>
+                    <input id="txtOrden" type="number" class="form-control" required>
+                </div>
+                <br />
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" id="btnLimpiar" class="btn btn-outline-success">Limpiar</button>
+                <button type="button" id="btnGuardaApro" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="MdlEditar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 100%">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">¿Esta seguro de modificar la aprobación?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div >
+                    <p><strong>Esta acción quitará la aprobación actual y siguientes.<br /> Para continuar presione el botón Guardar.</strong></p>
+                </div>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" id="btnEditarApro" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script>
+
+        Index = function () {
+
+            $(document).ready(function () {
+                $('#divIndicadoresEconomicos').css('display', 'none');
+                $('#tblAprobacion').DataTable();
+                $('#divIndicadoresEconomicos').hide();
+
+                // $("#divIndicadoresEconomicos").slideUp();
+
+            });
+
+            return {
+                urlGetBuscaSolicitud: "@Url.Action(nameof(AprobacionController.GetBuscaSolicitud), "Aprobacion")",
+                urlGetUsuarioSolicitud: "@Url.Action(nameof(SolicitudController.GetContraparteTecnica), "Solicitud")",
+                urlGetSelectConfig: "@Url.Action(nameof(AprobacionController.GetConfigAprobacion), "Aprobacion")",
+                urlGetModalAprobacion: "@Url.Action(nameof(AprobacionController.GetModalAprobacion), "Aprobacion")",
+                urlGetEliminarAprobacion: "@Url.Action(nameof(AprobacionController.GetEliminarAprob), "Aprobacion")",
+                urlPostEditarAprobacion: "@Url.Action(nameof(AprobacionController.PostEditarAprob), "Aprobacion")",
+                urlPostCrearAprobacion: "@Url.Action(nameof(AprobacionController.PostCrearAprob), "Aprobacion")",
+                urlSetAprobadorActual: "@Url.Action(nameof(AprobacionController.SetAprobadorActual), "Aprobacion")"
+
+            }
+
+
+        }();
+
+    </script>
+
+    <script type="text/javascript" src="~/js/BackOffice/_MatrizAprobacion.js" asp-append-version="true"></script>
+}
+

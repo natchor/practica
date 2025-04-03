@@ -1,0 +1,53 @@
+﻿.btn-default.active, .btn-default:active {
+    color: #FFFFFF;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+    text-decoration: none;
+}
+
+a.p2 {
+    display: none;
+    height: 10px;
+    left: -30px;
+    position: relative;
+    top: -60px;
+    width: 10px;
+}
+
+a.p3 {
+    /*display: none;
+    height: 10px;
+    left: 30px;
+    position: relative;*/
+    top: -30px;
+    width: 10px;
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+    /*font-size: 18px;*/
+}
+
+.tblAsignaciones tr
+{
+    cursor:pointer;
+}
+
+.tblAsignaciones > tbody > tr:hover > td
+{
+    background-color: #e8e8e8;
+}
+
+
+
+
+.active {
+    /*color: #68dff0;*/
+    color: #ff865c;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    display: block;
+    text-decoration: underline;
+}

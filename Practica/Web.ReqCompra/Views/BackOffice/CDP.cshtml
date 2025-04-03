@@ -1,0 +1,439 @@
+﻿@model SolicitudModel;
+@{
+    Layout = null;
+
+
+    string textoCertificacion = ViewData["CDP1"].ToString();
+
+    bool esFondoNoAfectoLey = ViewData["programaId"]._toInt() == 6;
+
+    if (esFondoNoAfectoLey)
+    {
+        textoCertificacion = ViewData["CDP2"].ToString();
+    }
+
+    string textoArrastre = ViewData["CDPARRASTRE"].ToString();
+
+}
+
+
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Certificado de Disponibilidad Presupuestaria</title>
+
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="~/css/cdpcss.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="~/css/site.css" rel="stylesheet" />
+</head>
+<body>
+
+    <main>
+        <br />
+        <br />
+        <br />
+        <div id="divCDPId">
+            @*<form id="frmLogin" asp-action="LoginNow" asp-controller="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">*@
+            <div class=" row">
+                <div class="col-10 me-auto"><img class="mb-4" src="/img/logoPresupuesto.png" alt=""></div>
+                <div class="col-auto">
+                    <button class="btn btn-outline-primary d-print-none" onclick="javascipt: window.print()"><i class="fas fa-print"></i> </button>
+                </div>
+            </div>
+            <br />
+            <div class="text-center"><h2><u><strong>Certificado de Disponibilidad Presupuestaria</strong></u></h2></div>
+            <br />
+
+
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-8">
+                    <table id="identificacionId">
+                        <tr>
+                            <th width="60%">N° CDP:</th>
+                            <th class="AlDer"> @Model.CDPNum </th>  @*@Model.Id - @ViewData["anio"]*@
+
+                        </tr>
+                        <tr>
+                            <td class="bold">Fecha:</td>
+                            <td class="AlDer">@Model.FechaValidacionCDP</td>
+
+                        </tr>
+                        <tr>
+                            <td class="bold">Fase Interoperabilidad:</td>
+                            <td class="AlDer">@ViewData["fase"] </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="d-flex justify-content-lg-around flex-wrap flex-md-nowrap ">
+
+                <div class="col-12"> <p align="justify"> @textoCertificacion  </p> </div>
+            </div>
+            <br />
+            <div class="d-flex justify-content-lg-around flex-wrap flex-md-nowrap ">
+
+                <div class="col-12">
+                    <table id="detalleId">
+                        <tr>
+                            <td class="bold">Id Solicitud Compra:</td>
+                            <td width="70%">@Model.NroSolicitud</td>
+
+                        </tr>
+                        <tr>
+                            <td class="bold">Nombre de la Compra:</td>
+                            <td width="70%">@Model.NombreCompra</td>
+
+                        </tr>
+
+                        @if (!esFondoNoAfectoLey)
+                        {
+                            <tr>
+                                <td class="bold">Partida-Capitulo:</td>
+                                <td>24 - 01 </td>
+                            </tr>
+                        }
+
+                        <tr>
+                            <td class="bold">Programa Presupuestario:</td>
+                            <td>@ViewData["programa"] </td>
+                        </tr>
+                        <tr>
+                            <td class="bold">Imputación Presupuestaria:</td>
+                            <td>@ViewData["imputacion"] </td>
+                        </tr>
+                        <tr>
+                            <td class="bold">Unidad Demandante:</td>
+                            <td>@ViewData["unidadDemandante"] </td>
+                        </tr>
+                        <tr>
+                            <td class="bold">ID Iniciativa:</td>
+                            <td>@Model.IniciativaVigenteId</td>
+                        </tr>
+                        <tr>
+                            <td class="bold">Folio Requerimiento SIGFE:</td>
+                            <td>@Model.FolioRequerimientoSIGFE</td>
+                        </tr>
+                        <tr>
+                            <td class="bold">Folio Compromiso Cierto:</td>
+                            <td>@Model.FoliocompromisoSIGFE</td>
+                        </tr>
+                        <tr>
+                            <td class="bold">Monto Total OC :</td>
+                            <td class="AlDer" valor="@Model.MontoAprox">
+                                <input id="hdnDivisa" type="hidden" value="@ViewData["divisa"]">
+
+                                @if (@Model.TipoMonedaId != 5)
+                                {
+                                    //<div class="container">
+                                    <div class="row">
+                                        <div class="col-6" style="border-right: 2px solid #0070C0; "><span class="cantidad" id="TotalOC">@Model.MontoAprox</span></div>  <div class="col-6"><span class="cantidadP">CLP: $@Convert.ToInt32((decimal)Model.MontoAprox* (decimal)Model.ValorDivisa)</span></div>
+                                    </div>
+                                    //</div>
+                                }
+
+                                else
+                                {
+                                    <span class="cantidad" id="TotalOC">@Convert.ToInt32(Model.MontoAprox)</span>
+                                }
+
+
+
+
+
+
+                            </td>
+                        </tr>
+                        @*<tr>
+                                <td class="bold">Monto Año Actual @ViewData["anio"] :</td>
+                                <td class="AlDer"><span id="TotalAnho"></span></td>
+                            </tr>*@
+
+                        @foreach (SolicitudDetalleModel det in ViewBag.tablaDetalleSolicitud)
+                        {
+                            <tr>
+                                <td class="bold">Monto Año  @det.Anio</td>
+                                @*<td class="AlDer" valor="@det.MontoPresupuestado"> <span class="cantidad">@det.MontoPresupuestado</span> </td>*@
+                                <td class="AlDer" valor="@det.MontoMonedaSel">
+
+                                    @if (@Model.TipoMonedaId != 5)
+                                    {
+                                        //<div class="container">
+                                        <div class="row">
+                                            <div class="col-6" style="border-right: 2px solid #0070C0; "><span class="cantidad">@det.MontoMonedaSel</span></div>  <div class="col-6"><span class="cantidadP">CLP: $@Convert.ToInt32(det.MontoPresupuestado)</span></div>
+                                        </div>
+                                        //</div>
+                                    }
+
+                                    else
+                                    {
+                                        <span class="cantidad">@det.MontoMonedaSel</span>
+                                    }
+                                </td>
+
+
+                            </tr>
+
+                        }
+
+                    </table>
+
+
+                </div>
+            </div>
+
+
+            @if (@ViewData["fase"].ToString() != "FASE 2")
+            {
+
+                <div class="accordion accordion-flush" id="accordion1">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#accordion1">
+                            <div class="accordion-body">
+                                <div id="notaUno" class="d-flex justify-content-lg-around flex-wrap">
+                                    <div class="col-12">
+                                        <p align="justify"> (*) El analista de Compras designado, se pondrá en contacto con nosotros para solicitar generación de compromiso SIGFE Fase1, para lo cual deberá adjuntar OC en estado borrador.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+            else
+            {
+
+            }
+
+            @if (@Model.ModalidadCompraId == 2)
+            {
+                <div class="accordion accordion-flush" id="accordion2">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingDos">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseDos" aria-expanded="false" aria-controls="flush-collapseDos">
+                            </button>
+                        </h2>
+                        <div id="flush-collapseDos" class="accordion-collapse collapse show" aria-labelledby="flush-headingDos" data-bs-parent="#accordion2">
+                            <div class="accordion-body">
+                                <div class=" row" id="notaDos">
+                                    <div class="col-12">
+                                        <p align="justify">
+                                            (@if (@ViewData["fase"].ToString() == "FASE 2")
+                                            {<span>*</span> }
+                                            else
+                                            { <span>**</span>}) Adicionalmente, el diferencial del monto total de dichos servicios, será imputado al programa e ítem que corresponda de la/s Ley/es que apruebe/n el Presupuesto para el/los siguiente/s año/s (@ViewData["cant"]), en la medida que se disponga de fondos suficientes para ello y se cumplan los requisitos para su desembolso.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            }
+            else
+            {
+
+            }
+
+
+
+            <div class=" row" id="tablaAprobacion">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    @if (Model.ValidacionCDP)
+                    {
+                        <h4>Autoriza CDP</h4>
+                        <table id="aprobacionId">
+                            <tr>
+                                <th width="40%" class="bold">Nombre</th>
+                                <th width="30%" class="bold">Fecha</th>
+                                <th width="30%" class="bold">Cargo</th>
+                            </tr>
+                            <tr>
+                                <td>@ViewData["nombreCDP"]</td>
+                                <td>@Model.FechaValidacionCDP</td>
+                                <td>@ViewData["cargoCDP"]</td>
+                            </tr>
+
+                        </table>
+                    }
+                    else
+                    {
+                        <div style="height: 60px; " class="alert-primary text-center"> <p style="margin: 15px; "><h4>CDP sin aprobación</h4></p></div>
+                    }
+
+                </div>
+                <div class="col-2"></div>
+            </div>
+            <br />
+
+
+            @if (@ViewData["esAjuste"] is true)
+            {
+                <div class="d-flex justify-content-lg-around flex-wrap flex-md-nowrap ">
+
+                    <div class="col-12">
+                        <table id="detalleAjusteId">
+
+
+                            <tr>
+                                <td class="bold">Monto Total OC Ajustado:</td>
+                                <td width="65%" class="AlDer" valor="@ViewData["MontoOC"]"> <input id="hdnDivisa" type="hidden" value="@ViewData["divisa"]"> <span class="cantidad" id="TotalOC">@ViewData["MontoOC"]</span></td>
+                            </tr>
+
+
+                            @foreach (SolicitudDetalleModel det in ViewBag.tablaDetalleSolicitud)
+                            {
+                                <tr>
+                                    @* @if (@det.EsAjuste is true) {
+                                    {*@
+                                        <td class="bold">Monto final CDP ajustado año  @det.Anio</td>
+
+                                        <td width="65%" class="AlDer" valor="@det.MontoMonedaSelFinal">
+                                            <span class="cantidad">@det.MontoMonedaSelFinal</span>
+                                                                                
+                                        </td>
+                                    @*}*@
+                                </tr>
+                            }
+
+
+                        </table>
+
+
+                    </div>
+                </div>
+                <br />
+
+                <div class=" row" id="tablaAjuste">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <h4>Ajusta CDP</h4>
+                        <table id="AjusteCDPId">
+                            <tr>
+                                <th width="35%" class="bold">Solicita ajuste</th>
+                                <th width="35%" class="bold">Jefatura que aprueba ajuste</th>
+                                <th width="30%" class="bold">Fecha</th>
+                                
+                            </tr>
+                            <tr>
+                                <td>@ViewData["cambiaCDP"]</td>
+                                <td>@ViewData["nombreAjustaCDP"]</td>
+                                <td>@ViewData["fechaAjusteCDP"]</td>
+                                
+                            </tr>
+
+                        </table>
+
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+                if (@Model.Arrastre) { 
+                <div class="accordion accordion-flush" id="accordion1">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#accordion1">
+                            <div class="accordion-body">
+                                <div id="notaUno" class="d-flex justify-content-lg-around flex-wrap">
+                                    <div class="col-12">
+                                        <p align="justify">@textoArrastre</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>}
+
+
+            }
+
+        </div>
+
+
+        @*</form>*@
+    </main>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Fontawesome -->
+    <script src="~/lib/fontawesome/js/all.js"></script>
+
+    <script>
+
+        CDP = function () {
+
+
+            function humanizeNumber(n) {
+                n = n.replace(".", ",");
+                n = n.toString()
+                while (true) {
+                    var n2 = n.replace(/(\d)(\d{3})($|,|\.)/g, '$1.$2$3')
+                    if (n == n2) break
+                    n = n2
+                }
+                return n
+            }
+
+
+            $(document).ready(async function () {
+                let divisa = $("#hdnDivisa").val();
+                debugger;
+
+                await $(".cantidad").each(async function (i) {
+                    let spanMonto = $(this);
+                    let valor = $(this).closest('td').attr('valor');
+                    valor = humanizeNumber(valor);
+
+                    if (divisa == "CLP") {
+                        valor = valor.split(",")[0];
+                        //alert(valor.split(",")[0])
+                    }
+
+                    spanMonto.html(divisa+" "+ valor);
+                    //spanMonto.html(formatterPeso.format(valor));
+
+
+
+                });
+            });
+
+
+        @*document.getElementById('TotalOC').innerHTML = formatterPeso.format(@Model.MontoAprox);*@
+
+
+            //$(".divSolicitudes").html();
+            //console.log(formatterPeso.format(value))
+     // → $ 12.500
+
+
+        }();
+
+    </script>
+</body>
+</html>
+
+
+
+

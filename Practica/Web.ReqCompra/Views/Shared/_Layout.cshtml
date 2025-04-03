@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - Requerimiento de Compras</title>
+
+    <!-- Bootstrap  -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- DataTables  -->
+    <link rel="stylesheet" type="text/css" href="~/lib/DataTables/datatables.css">
+
+    <link rel="stylesheet" href="~/lib/jQuery-Plugin-Editable-Select/dist/jquery-editable-select.min.css" />
+
+    <!-- SweetAlert -->
+    <link href="~/lib/SweetAlert/sweetalert2.min.css" rel="stylesheet" />
+
+    <!-- Fontawesome -->
+    <link href="~/lib/fontawesome/css/all.css" rel="stylesheet" />
+    <!-- tooltips y mas -->
+    <link rel="stylesheet" href="~/lib/jBox/dist/jBox.all.css">
+    <!-- MDB -->
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css"
+          rel="stylesheet" />-->
+    <!-- Custom -->
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/simple-sidebar.css" rel="stylesheet">
+
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+
+    @*<partial name="_Header" />*@
+
+    <div id="wrapper">
+        <nav id="sidebar-wrapper" class="col-md-2 col-lg-2 d-md-block bg-light sidebar collapse">
+            <partial name="_Sidebar" />
+        </nav>
+
+        @*<div id="page-content-wrapper">
+
+
+            </div>*@
+
+
+        <div id="page-content-wrapper">
+            <div class="container-fluid xyz">
+                <div class="row">
+                    <main role="main" class="col-sm-12 col-md-12 col-lg-12">
+                        <partial name="_Header" />
+
+                        @RenderBody()
+                    </main>
+                </div>
+            </div>
+        </div>
+        @*<div class="container-fluid">
+                <div class="row">
+
+
+
+                </div>
+
+            </div>*@
+
+        <footer class="border-top footer text-muted">
+
+            <div class="container">
+                @*&copy; 2021 - Web.ReqCompra - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>*@
+            </div>
+        </footer>
+    </div>
+    <!-- JQuery -->
+    <script type="text/javascript" charset="utf8" src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <!-- SweetAlert -->
+    <script type="text/javascript" src="~/lib/SweetAlert/sweetalert2.all.min.js"></script>
+
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf8" src="~/lib/DataTables/datatables.js"></script>
+    <!-- EditableSelect -->
+    <script type="text/javascript" charset="utf8" src="~/lib/jQuery-Plugin-Editable-Select/dist/jquery-editable-select.min.js"></script>
+    <!-- Notificaciones -->
+    <script src="~/lib/ohSnap/ohsnap.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Fontawesome -->
+    <script src="~/lib/fontawesome/js/all.js"></script>
+    <!-- tooltips y mas -->
+    <script src="~/lib/jBox/dist/jBox.all.js"></script>
+    
+    <!-- MDB -->
+    <!--<script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"></script>-->
+    <!-- Custom -->
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <!-- menu -->
+    <script src="~/js/sidebar_menu.js" asp-append-version="true"></script>
+
+    <script>
+
+        Layout = function () {
+
+            return {
+                urlGetConf: "@Url.Action(nameof(HomeController.GetConf), "Home")"
+            }
+
+        }();
+
+    </script>
+
+    <!-- En Paginas -->
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

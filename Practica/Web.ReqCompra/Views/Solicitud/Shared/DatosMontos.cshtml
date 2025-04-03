@@ -1,0 +1,113 @@
+﻿@model SolicitudModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    bool esEditar = ViewBag.Accion == Acciones.Editar;
+    bool disabled = false;
+    bool ajusteCDP = false;
+    bool arrastre = false;
+
+    if (Model != null)
+    {
+        disabled = !esEditar;
+        @if (Model.FuncionarioAjusteCDPId != null)
+        {
+            ajusteCDP = true;
+        }
+        @if (Model.Arrastre == true)
+        {
+            arrastre = true;
+
+        }
+
+    }
+}
+
+<div class="card bg-light CardTr text-dark">
+    <div class="card-body">
+         <div class="row"><div class="col-11 col-sm-11"> <h5 class="card-title">Datos Montos</h5> 
+        </div>
+            @if (ajusteCDP)
+            {
+                <div class="col-1 col-sm-1"> <div class="etiqueta" id="div2">Ajuste</div> 
+                <input id="ajusteID" name="ajusteID" type="hidden" value="1">
+                </div>
+
+            }
+        </div>
+       
+
+
+        <div class="row">
+            <div class="col-4 col-sm-4">
+                <div class="form-group">
+                    <label asp-for="ModalidadCompraId"><b>Compra Anual-Multianual</b></label>
+                    <select asp-for="ModalidadCompraId" disabled="@disabled" class="form-control form-select" id="txtModalidadCompra" required>
+                        @foreach (ModalidadCompraSelectModel item in ViewBag.ModalidadCompraSelectModel)
+                        {
+                            <option value="@item.Id">@item.Nombre</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="col-4 col-sm-4">
+                <div class="form-group">
+                    <label asp-for="TipoCompraId "><b>Modalidad de Compra</b> </label>
+                    <select asp-for="TipoCompraId" disabled="@disabled" class="form-control form-select" id="txtTipoCompra"  data-bs-toggle="tooltip" data-bs-placement="top" title="" required>
+                        @foreach (TipoMonedaSelectModel item in ViewBag.TipoCompraSelectModel)
+                        {
+                            <option value="@item.Id">@item.Nombre</option>
+                        }
+                    </select>
+                    @*<span id="txtProgramaPresupuestariotool"></span>*@
+                    <small class="text-danger d-print-none" id="msjeTipoCompra" style="display: none;">@*Solicitud debera ser aprobada por Gabinete.*@</small>
+                </div>
+            </div>
+
+            <div class="col-4 col-sm-4">
+                <div class="form-group">
+                    <label asp-for="TipoMonedaId "><b>Tipo de Moneda </b></label>
+                    <select asp-for="TipoMonedaId" class="form-control form-select" id="txtTipoMoneda" data-valor="@Model?.TipoMonedaId" disabled="@disabled" required>
+                        @foreach (SelectTipoMonedaModel item in ViewBag.TipoMonedaSelect)
+                        {
+                            <option value="@item.Id">@item.Nombre</option>
+                        }
+                    </select>
+
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-6 col-sm-6">
+                <label asp-for="MontoAprox"><b>Monto estimado total OC</b> </label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" name="simboloDivisa">$</span>
+                    <input asp-for="MontoAprox" data-type="monto" readonly="@disabled" class="form-control fa-sort-numeric-asc" id="txtMontoAprox" placeholder="Monto presupuestado o aproximado en divisa informada" required>
+
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="MontoUTM"><b>Monto UTM </b></label>
+                    <input asp-for="MontoUTM" data-type="monto" disabled="@disabled" class="form-control" id="txtMontoUTM" readonly>
+                </div>
+            </div>
+            <div class="col-5 col-sm-5" id="divMultianual">
+                <label><b>Monto año @ViewData["ANHO"].ToString()</b> </label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" name="simboloDivisa">$</span>
+                    <input data-type="monto" disabled="@disabled" class="form-control fa-sort-numeric-asc Anuales" id="txtMontoAnhoActual" name="SolicitudDetalle" placeholder="Monto año @ViewData["ANHO"].ToString()" data-anio="@ViewData["ANHO"].ToString()" required>
+                    <button type="button" id="btnMasAnios" class="btn btn-primary"><i class="fas fa-plus"></i></button>
+                </div>
+            </div>
+            @if (arrastre){
+            <div class="col-1 col-sm-1"> <div class="etiqueta" id="div3">Arrastre</div> </div>}
+
+        </div>
+    </div>
+
+</div>

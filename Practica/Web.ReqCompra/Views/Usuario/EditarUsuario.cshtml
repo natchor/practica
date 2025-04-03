@@ -1,0 +1,149 @@
+﻿@model UserModel;
+@{
+    ViewData["Title"] = "Guardar Usuario";
+
+}
+
+
+
+<div class="">
+    @*<form id="frmEditar" asp-action="EditarUsuario" asp-controller="Usuario" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">*@
+
+
+        <div class="card bg-light text-dark">
+            <div class="card-body">
+                <h5 class="card-title">@ViewBag.TituloUser</h5>
+                <br />
+                <input id="UserId" name="UserId" type="hidden" value="@ViewBag.userId" />
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label asp-for="Nombre"><b>Nombre</b></label>
+                        <input class="form-control" type="text" id="txtNombre" placeholder="Nombre">
+                    </div>
+
+                    <div class="col-sm-3">
+                        <label asp-for="Apellido"><b>Apellido</b></label>
+                        <input class="form-control" type="text" id="txtApellido" placeholder="Apellido">
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="JefeDirectoId"><b>Jefe Directo</b></label>
+                            <select asp-for="JefeDirectoId" class="form-control" id="txtJefeDirecto">
+                                <option selected = "JefeDirectoId"></option>
+                            </select>
+                        </div>
+
+                        
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label asp-for="Email"><b>Correo</b></label>
+                        <input asp-for="Email" class="form-control" id="txtEmail" type="email" placeholder="email@mail.com">
+                    </div>
+                    <div class="col-sm-3">
+                        @if (LdapConfig.UseLoginLdap)
+                        {
+                            <label asp-for="Password"><b>Contraseña</b></label>
+                            <input class="form-control" type="password" id="txtPassword" placeholder="Contraseña" hidden>
+                            <p class="text-center">Clave institucional.</p>
+                        }
+                        else
+                        {
+                            <label asp-for="Password"><b>Contraseña</b></label>
+                            <input class="form-control" type="password" id="txtPassword" placeholder="Contraseña">
+                        }
+                    </div>
+                     <div class="col-sm-3">
+                        <div class="form-group">
+                            <label asp-for="Estado"><b>Estado</b></label>
+                            <select asp-for="Estado" class="form-control" id="txtEstado">
+                                <option value="True" data-valor="true">Activo</option>
+                                <option value="False" data-valor="false">Inactivo</option>
+                            </select>
+                          
+                        </div>
+                    </div>
+                </div>
+                <br />
+                
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="SectorId"><b>Sector</b></label>
+                            <select asp-for="SectorId" class="form-control" id="txtSector">
+                            </select>
+                        </div>
+
+                    </div>
+
+                     <div class="col-sm-3">
+                        <div class="form-group">
+                            <label asp-for="CargoId"><b>Cargo</b></label>
+                            <select asp-for="CargoId" class="form-control" id="txtCargo">
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-3">
+                         <div class="form-group">
+                            <label ><b>Role</b></label>
+                            <select  class="form-control" id="txtRol">
+                            </select>
+
+                        </div>
+                       
+                    </div>
+                    
+                </div>
+                <br />
+               
+
+
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-sm-11">
+                <button type="button" id="btnUserEditar" class="btn btn-primary">@ViewBag.TituloUser</button>
+                <button type="button" id="btnRegresarUsuario" class="btn btn-outline-secondary">Regresar</button>
+            </div>
+
+
+        </div>
+        <br />
+    @*</form>*@
+</div>
+@section Scripts{
+    <script>
+
+        EditaUsuario = function () {
+
+            $(document).ready(function () {
+                $('#divIndicadoresEconomicos').css('display', 'none');
+                $('#divIndicadoresEconomicos').hide();
+            });
+
+
+            return {
+                urlPostUsuario: "@Url.Action(nameof(UsuarioController.PostUsuario), "Usuario")",
+                urlPostRol: "@Url.Action(nameof(UsuarioController.PostRol), "Usuario")",
+                urlGetSector: "@Url.Action(nameof(SolicitudController.GetSector), "Solicitud")",
+                urlGetFuncionarios: "@Url.Action(nameof(UsuarioController.GetFuncionariosForSelect), "Usuario")",
+                urlGetCargo: "@Url.Action(nameof(UsuarioController.GetCargo), "Usuario")",
+                urlGetRol: "@Url.Action(nameof(UsuarioController.GetRol), "Usuario")",
+                urlPostGrabar: "@Url.Action(nameof(UsuarioController.PostGrabar), "Usuario")",
+                urlPostGrabarRol: "@Url.Action(nameof(UsuarioController.PostGrabarRol), "Usuario")",
+                urlPostValidaMail: "@Url.Action(nameof(UsuarioController.PostValidaMail), "Usuario")",
+                }
+
+        }();
+
+
+    </script>
+    <script type="text/javascript" src="~/js/Usuario/_EditarUsuario.js" asp-append-version="true"></script>
+}
+
+

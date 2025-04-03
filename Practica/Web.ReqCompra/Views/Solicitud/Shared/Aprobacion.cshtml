@@ -1,0 +1,71 @@
+﻿@model AprobacionModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    string usuarioActualNombre = Context.User.FindFirst(CustomClaims.FullName).Value;
+
+    AprobacionConfigModel apro = (AprobacionConfigModel)ViewBag.AprobacionConfig;
+}
+
+
+<br />
+
+@*<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Solicitud aprobada.</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>*@
+
+<br />
+
+
+<form id="frmAprobar" method="post">
+    <input type="hidden" asp-for="SolicitudId" />
+    <input type="hidden" asp-for="AprobacionConfigId" />
+
+
+    <div class="card bg-light text-dark  mb-5">
+        <div class="card-body">
+            <h5 class="card-title">@apro.Nombre</h5>
+            <div class="row">
+                <div class="col-6 col-sm-6">
+                    <input class="form-control" type="text" value="@usuarioActualNombre" placeholder="Nombre Aprobador" readonly>
+                </div>
+
+                <div class="col-6 col-sm-6">
+                    <input class="form-control" type="text" placeholder="Fecha" value="@DateTime.Now.ToString("dd/MM/yyyy")" readonly>
+                </div>
+            </div>
+
+
+            <br />
+            <div class="row">
+                <div class="col-12 col-sm-12">
+                    <div class="form-group">
+                        <label asp-for="Observacion"><b>Observaciones</b> </label>
+
+                        <textarea class="form-control" asp-for="Observacion" id="tbObservacion" rows="3" required autofocus></textarea>
+                    </div>
+
+                </div>
+            </div>
+            <br />
+            <div class="row d-print-none">
+                <div class="col-6 col-sm-6">
+                    @*<button type="submit" id="btnAprobar" class="btn btn-primary">Aprobar</button>*@
+                    <button type="button" id="btnAprobar" class="btn btn-primary">@(apro.RequiereAsignacion ? "Ratificar" : "Aprobar")</button>
+
+                </div>
+
+                <div class="col-6 col-sm-6">
+                    <button type="button" id="btnRechazar" class="btn btn-outline-danger">Rechazar</button>
+
+                </div>
+            </div>
+            <br />
+            
+
+          
+        </div>
+    </div>
+</form>

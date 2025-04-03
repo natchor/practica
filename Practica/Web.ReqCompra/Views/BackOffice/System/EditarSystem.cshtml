@@ -1,0 +1,74 @@
+﻿@model PropertiesSystemModel;
+@{
+    ViewData["Title"] = "Editar Propiedades de Sistema y CDP";
+}
+
+<div class="container">
+    @*<form id="frmEditar" asp-action="EditarSystem" asp-controller="BackOffice" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">*@
+
+
+        <div class="card bg-light text-dark">
+            <div class="card-body">
+                <h5 class="card-title">Editar</h5>
+                <br />
+                <input id="SystemId" name="SystemId" type="hidden" value="@ViewBag.Id" />
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label asp-for="Nombre"><b>Nombre</b></label>
+                        <input class="form-control" type="text" id="txtNombre" placeholder="Nombre" disabled>
+                    </div>
+                </div>
+				<br />
+				<div class="row">
+
+                    <div class="col-sm-6">
+                        <label asp-for="Codigo"><b>Código</b></label>
+                        <input class="form-control" type="text" id="txtCodigo" placeholder="Código" disabled>
+                    </div>
+                </div>
+				<br />
+				<div class="row">
+                    <div class="col-sm-12">
+                        <label asp-for="Valor"><b>Valor</b></label>
+                        
+                        <textarea class="form-control"  asp-for="Valor" id="txtValor" maxlength="2000" rows="4" required autofocus></textarea>
+
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-sm-11">
+                <button type="button" id="btnSystemEditar" class="btn btn-primary">Editar Propiedad</button>
+                <button type="button" id="btnRegresarSystem" class="btn btn-outline-secondary">Regresar</button>
+            </div>
+        </div>
+        <br />
+
+@section Scripts{
+    <script>
+
+        EditaSystem = function () {
+
+            $(document).ready(function () {
+                $('#divIndicadoresEconomicos').css('display', 'none');
+                $('#divIndicadoresEconomicos').hide();
+            });
+
+
+           return {
+                urlPostCargar: "@Url.Action(nameof(Web.ReqCompra.Controllers.BackOfficeController.PostCargar), "BackOffice")",
+                urlPostGrabar: "@Url.Action(nameof(Web.ReqCompra.Controllers.BackOfficeController.PostGrabarSystem), "BackOffice")",
+                
+                }
+
+        }();
+
+    </script>
+    <script type="text/javascript" src="~/js/BackOffice/_EditarSystem.js" asp-append-version="true"></script>
+  
+}
+
+

@@ -1,0 +1,66 @@
+﻿@model RoleModel;
+@{
+    ViewData["Title"] = "Editar Rol";
+}
+
+
+<div class="container">
+    <div class="card bg-light text-dark">
+        <div class="card-body">
+            <h5 class="card-title">@ViewBag.Titulo</h5>
+            <br />
+            <input id="RolId" name="RolId" type="hidden" value="@ViewBag.Id" />
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <label asp-for="Nombre"><b>Nombre</b></label>
+                    <input class="form-control" type="text" id="txtNombre" placeholder="Nombre">
+                </div>
+
+
+            </div>
+            <br />
+
+
+
+
+
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-sm-11">
+            <button type="button" id="btnRolEditar" class="btn btn-primary">@ViewBag.Titulo</button>
+            <button type="button" id="btnRegresar" class="btn btn-outline-secondary">Regresar</button>
+        </div>
+
+
+    </div>
+    <br />
+    @*</form>*@
+</div>
+@section Scripts{
+    <script>
+
+        EditaRol = function () {
+
+            $(document).ready(function () {
+                $('#divIndicadoresEconomicos').css('display', 'none');
+                $('#divIndicadoresEconomicos').hide();
+            });
+
+
+            return {
+               urlPostCargar: "@Url.Action(nameof(Web.ReqCompra.Controllers.BackOfficeController.PostCargar), "BackOffice")",
+               urlPostGrabar: "@Url.Action(nameof(Web.ReqCompra.Controllers.BackOfficeController.PostGrabarRol), "BackOffice")",
+
+                }
+
+        }();
+
+    </script>
+    <script type="text/javascript" src="~/js/BackOffice/_EditarRol.js" asp-append-version="true"></script>
+}
+
+

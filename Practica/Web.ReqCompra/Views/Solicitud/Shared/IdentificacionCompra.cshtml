@@ -1,0 +1,114 @@
+﻿@model SolicitudModel;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+    bool esEditar = ViewBag.Accion == Acciones.Editar;
+
+
+    string solicitanteName = Context.User.FindFirst(CustomClaims.FullName).Value;
+    string solicitanteSectName = ViewBag.SectorPadreStr;
+    string fechaSolicitud = DateTime.Now.Date.ToString("dd/MM/yyyy");
+    bool disabled = false;
+    string nroSolicitud = string.Empty;
+    string estado=string.Empty;
+
+    if (Model != null)
+    {
+        solicitanteName = Model.Solicitante.FullName;
+        solicitanteSectName = Model.Solicitante.Sector.Nombre;
+        fechaSolicitud = Model.FechaCreacion.ToString("dd/MM/yyyy");
+        disabled = !esEditar;
+        nroSolicitud = " Nº " + Model?.NroSolicitud;
+        estado = ViewBag.estado;
+
+    }
+}
+
+
+<div class="card bg-light CardTr text-dark">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-11 col-sm-11">
+                <h5 class="card-title">Identificación de la Compra @nroSolicitud </h5> 
+            </div>
+            @if (estado != string.Empty)
+            {
+                
+                <div class="col-1 col-sm-1"> <div class="etiqueta" id="div4">@estado</div> </div>
+                 
+            }
+        </div>
+        <br />
+        <div class="row">
+            
+            <div class="col-5 col-sm-5">
+                    <input class="form-control" type="text" placeholder="Nombre Solicitante" value="@solicitanteName" id="IDNombreSolicitante" readonly>
+            </div>
+
+            <div class="col-5 col-sm-5">
+                
+                    <input class="form-control" type="text" placeholder="Nombre sector solicitante" value="@solicitanteSectName" id="IDDepartamentoSolicitante" readonly>
+            
+                 </div>
+
+            <div class="col-2 col-sm-2">
+                <input class="form-control" type="text" placeholder="Fecha Solicitud" value="@fechaSolicitud" id="IDFechaSolicitud" readonly>
+            </div>
+        </div>
+
+
+        <br />
+        <div class="row">
+            <div class="col-6 col-sm-6">
+                <div class="form-group">
+                    <div class="cssToolTip">
+                        <label asp-for="NombreCompra "><b>Nombre de la Compra</b> </label>
+                        <textarea class="form-control" disabled="@disabled" asp-for="NombreCompra" id="txtNombreCompra" maxlength="200" rows="3" required placeholder="Ingrese el nombre o identificación de la compra" autofocus></textarea>
+                        <input class="form-control" asp-for="Id" type="hidden" id="hdnId">
+
+                       @* <span>Nombre o identificación de la compra.<br />Si contiene mucho texto agrande la casilla desde la esquina inferior derecha </span>*@
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="col-6 col-sm-6">
+                <div class="cssToolTip">
+                    <div class="form-group">
+                        <label asp-for="ObjetivoJustificacion "><b>Justificación de  Compra</b></label>
+                        <textarea class="form-control" disabled="@disabled" asp-for="ObjetivoJustificacion " id="txtObjetivoJustificacion" rows="3" placeholder="Ingrese el o los motivos por el que se realiza la compra" required></textarea>
+                        @*<span>Justificación de la compra.<br />Si contiene mucho texto agrande la casilla desde la esquina inferior derecha </span>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-12 col-sm-12">
+                <div class="cssToolTip">
+                    <div class="form-group">
+                        <label asp-for="ObservacionGeneral "><b>Comentarios adicionales de la compra</b> </label>
+                        <textarea class="form-control" disabled="@disabled" asp-for="ObservacionGeneral " id="txtObservacionGeneral" placeholder="Ingrese toda información adicional a la compra ejemplo: rut proveedor." rows="3"></textarea>
+                    </div>
+                    @*<span id="txtObservacionGeneraltool">Ingrese toda información adicional a la compra ejem: rut proveedor.</span>*@
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-12 col-sm-12">
+                <div class="cssToolTip">
+                    <div class="form-group">
+                        <label asp-for="ContraparteTecnicaId "><b>Responsable recepción conforme</b> </label>
+                        <select asp-for="ContraparteTecnicaId" data-valor="@Model?.ContraparteTecnicaId" disabled="@disabled" class="form-control" id="txtContraparteTecnica" required>
+                        </select>
+                    </div>
+                    @*<span id="txtContraparteTecnicatool">Ingrese un valor.</span>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

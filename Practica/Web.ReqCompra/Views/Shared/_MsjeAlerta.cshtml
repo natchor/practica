@@ -1,0 +1,17 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+}
+
+@if (!string.IsNullOrWhiteSpace(ViewBag.StatusMessage as string))
+{
+
+    <div class="alert @(((string)ViewBag.StatusMessage).ToLower().StartsWith("error") ? "alert-danger" : "alert-success") alert-dismissible fade show" role="alert">
+        @ViewBag.StatusMessage
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+}

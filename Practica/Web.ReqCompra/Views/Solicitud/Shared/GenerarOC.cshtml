@@ -1,0 +1,150 @@
+﻿@model OCSolicitudModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    //string usuarioActualNombre = Context.User.FindFirst(CustomClaims.FullName).Value;
+    //bool tieneFecha = !string.IsNullOrEmpty(Model.FechaOrdenCompra._toString());
+
+
+
+    bool estaFinalizada = ViewBag.estaFinalizada;
+    bool esPresupuesto = ViewBag.EsPresupuesto != null ? ViewBag.EsPresupuesto : false;
+    bool tieneContrato = ViewBag.tieneContrato;
+    bool extraPresupuestario = ViewBag.Extrapresupuestario;
+
+
+}
+
+<br />
+
+<div class="tab">
+    <div><button id="ordenCompraId" class="btn-outline-primary bandejas" type="button">Orden Compra</button></div>
+    @if (tieneContrato)
+    {
+        <div><button id="fechaContratoId" class="btn-outline-primary bandejas" type="button">Contrato</button></div>
+    }
+    <input type="hidden"  id="hdntieneContrato" value= @tieneContrato />
+    <input type="hidden" id="hdnExtrapresupuestario" value= @extraPresupuestario />
+
+</div>
+<form id="frmGenerarOC" method="post">
+    <fieldset @(esPresupuesto || estaFinalizada ? "disabled" : "")>
+
+        <input type="hidden" asp-for="SolicitudId" />
+        <input type="text" name="numbeMaskr" style="display:none;">
+
+        <div  class="card bg-light text-dark  mb-5">
+            <div id="cardOrdenCompra" class="card-body">
+                <h5 class="card-title">Orden de Compra</h5>
+                <div class="row">
+                    <div class="col-6 col-sm-6">
+                        <label><b>Número de la orden de compra</b> </label>
+                        <input class="form-control" asp-for="NumOrdenCompra" maxlength="16" placeholder="Ejemplo: 584105-13-SE20" required>
+                        <div class="text-info">
+                            Ejemplo: 584105-13-SE20
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-6"> <label><b>Rut del proveedor</b> </label>  </div>
+                            <div id="rutExtranjero" class="col-sm-6"> <label><input class="form-check-input" type="checkbox" value="" id="rutProv"> Proveedor Extranjero</label>  </div>
+                        </div>
+                        <input name="rutProveedor" class="form-control rutProveedor" asp-for="RutProveedor" placeholder="Rut Proveedor" required>
+
+                        <div id="fbRutProveedor" class="invalid-feedback">
+                            El rut ingresado no es válido.
+                        </div>
+                        <div class="valid-feedback">
+                            Rut válido
+                        </div>
+                    </div>
+                </div>
+
+
+                <br />
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label><b>Nombre del proveedor</b> </label>
+
+                            <input class="form-control" asp-for="NombreProveedor" placeholder="Nombre del proveedor" required>
+                        </div>
+
+                    </div>
+                    <div class="col-6 col-sm-6">
+                        <div class="form-group">
+                            <label><b>Fecha de envío de OC</b> </label>
+
+                            <input class="form-control" type="date" asp-for="FechaOrdenCompra" placeholder="Fecha orden de compra" required>
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+
+                @if (!estaFinalizada)
+                {
+                    <div class="row d-print-none" id="divGuardar">
+                        <div class="col-6 col-sm-6">
+
+                            <button type="button" id="btnGenerar" class="btn btn-primary">Agregar</button>
+
+                        </div>
+
+                        <div class="col-6 col-sm-6">
+                            <button type="button" id="btnCancelar" class="btn btn-primary">Cancelar</button>
+
+                        </div>
+                    </div>
+
+                }
+
+                @if (!estaFinalizada && Context.User.FindFirst(PermissionsClaims.FinalizaSolicitud).Value._toBool())
+                {
+                    <div class="row d-print-none" id="divFinalizar" data-access="@Context.User.FindFirst(PermissionsClaims.FinalizaSolicitud).Value._toBool()">
+                        <div class="col-6 col-sm-6">
+                            <button type="button" id="btnFinalizar" class="btn btn-primary">Finalizar Compra</button>
+
+                        </div>
+                    </div>
+                }
+
+            </div>
+
+            <div id="cardContrato"  style="display:none;" class="card-body">
+
+                <h5 class="card-title">Contrato</h5>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label><b>Fecha inicio contrato</b> </label>
+                            @if (tieneContrato)
+                            {<input class="form-control" type="date" id="fechainicioContratoID" asp-for="FechaInicioContrato" placeholder="Fecha inicio contrato" required>}
+                            
+                        </div>
+
+                    </div>
+                    <div class="col-6 col-sm-6">
+                        <div class="form-group">
+                            <label><b>Fecha fin contrato</b> </label>
+
+                            @if (tieneContrato)
+                            {<input class="form-control" id="fechafinContratoID" type="date" asp-for="FechaFinContrato" placeholder="Fecha fin contrato" required>}
+                           
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+
+            </div>
+
+        </div>
+
+        
+
+    </fieldset>
+</form>
+

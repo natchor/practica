@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Migrations\20210826163834_CreaCamposTablaSolicitud.cs" />
+	  <Compile Remove="Migrations\20210826163834_CreaCamposTablaSolicitud.Designer.cs" />
+	  <Compile Remove="Migrations\20210826203400_CreaCamposTablaSolicitud2.cs" />
+	  <Compile Remove="Migrations\20210826203400_CreaCamposTablaSolicitud2.Designer.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="EntityFramework" Version="6.4.4" />
+		<PackageReference Include="MailKit" Version="2.11.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="ProcedimientosAlmacenados\" />
+	  <Folder Include="Vistas\" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Deshacer Procesos";
+}
+
+<div class="row">
+    <div class="col-3">
+    
+        <input class="form-control" maxlength="12" id="solicitudBuscarId" data-toggle="tooltip" data-placement="top" title="Ingrese año y número de solicitud los 0 son opcionales" value="@DateTime.Now.Year - 0">
+
+    </div>
+    <div class="col-1"> <input type="button" value="Buscar Solicitud" class="btn btn-outline-success btn-lg" id="btnAprobacionId"></div>
+ 
+
+
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="divSolicitud"></div>
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts{
+    <script>
+
+        Index = function () {
+
+            $(document).ready(function () {
+                $('#divIndicadoresEconomicos').css('display', 'none');
+                $('#tblAprobacion').DataTable();
+                $('#divIndicadoresEconomicos').hide();
+
+                // $("#divIndicadoresEconomicos").slideUp();
+
+            });
+
+            return {
+                urlGetBuscaSolicitud: "@Url.Action(nameof(BackOfficeController.GetBuscaSolicitud), "BuscaSolicitud")",
+               // urlGetAnulaSolicitud: "@Url.Action(nameof(BackOfficeController.GetBuscaSolicitud), "BuscaSolicitud")",
+                urlPostAnulaSolicitud: "@Url.Action(nameof(SolicitudController.Anular),"Solicitud")",
+                urlPostDeshacerEstadoSolicitud: "@Url.Action(nameof(SolicitudController.DeshacerEstado),"Solicitud")",
+                urlPostRechazarSolicitud: "@Url.Action(nameof(SolicitudController.RechazarProceso),"Solicitud")"
+
+
+
+            }
+
+
+        }();
+
+    </script>
+
+    <script type="text/javascript" src="~/js/BackOffice/_Proceso.js" asp-append-version="true"></script>
+}
+

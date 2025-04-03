@@ -1,0 +1,65 @@
+﻿@model TipoCompraModel;
+@{
+    ViewData["Title"] = "Editar TpCompra";
+}
+
+
+<div class="container">
+        <div class="card bg-light text-dark">
+            <div class="card-body">
+                <h5 class="card-title">@ViewBag.Titulo</h5>
+                <br />
+                <input id="CompraId" name="CompraId" type="hidden" value="@ViewBag.Id" />
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label asp-for="Nombre"><b>Nombre</b></label>
+                        <input class="form-control" type="text" id="txtNombre" placeholder="Nombre">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Estado"><b>Estado</b></label>
+                        <select asp-for="Estado" class="form-control" id="txtEstado">
+                            <option value="True" data-valor="true">Activo</option>
+                            <option value="False" data-valor="false">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-sm-11">
+                <button type="button" id="btnCompraEditar" class="btn btn-primary">@ViewBag.Titulo</button>
+                <button type="button" id="btnRegresarCompra" class="btn btn-outline-secondary">Regresar</button>
+            </div>
+
+
+        </div>
+        <br />
+    @*</form>*@
+</div>
+@section Scripts{
+    <script>
+
+        EditaCompra = function () {
+
+            $(document).ready(function () {
+                $('#divIndicadoresEconomicos').css('display', 'none');
+                $('#divIndicadoresEconomicos').hide();
+            });
+
+
+            return {
+                urlPostCargar: "@Url.Action(nameof(Web.ReqCompra.Controllers.BackOfficeController.PostCargar), "BackOffice")",
+                urlPostGrabar: "@Url.Action(nameof(Web.ReqCompra.Controllers.BackOfficeController.PostGrabarCompra), "BackOffice")",
+
+                }
+
+        }();
+
+    </script>
+    <script type="text/javascript" src="~/js/BackOffice/_EditarTpCompra.js" asp-append-version="true"></script>
+}
+
+

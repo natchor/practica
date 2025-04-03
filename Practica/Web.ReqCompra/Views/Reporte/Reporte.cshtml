@@ -1,0 +1,266 @@
+﻿@{
+    ViewData["Title"] = "Reportes";
+}
+
+
+<!--<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom text-center">
+    <div>-->
+@*<form asp-controller="Usuario" asp-action="EditarUsuario" method="post" class="form-horizontal"><button id="crearUserId" type="submit" class="btn btn-outline-success btn-lg"></button> </form>*@
+<!--<a href="/Usuario/EditarUsuario/0" class="btn btn-outline-success btn-lg">Crear Usuario</a>
+    </div>
+
+</div>-->
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="card text-white" id="ReporAzul">
+                <div class="card-body">
+                    <h5 class="card-title"> <span>Reporte Tiempo de Respuesta</span></h5>
+                    <div class="row">
+                        <div class="col-12">
+
+
+                            @*<span> Descripcion del reporte</span>*@
+
+                            <hr />
+                            <a id="rptTiempoRespuestaVer" class="btn btn-secondary" href="@Url.Action("DescargarArchivo","Reporte", new { nombre = "TiempoRespuesta"} )">Descargar</a>
+
+                            <!--<div class="row">
+                            <div class="col-6"> <a class="btn btn-secondary" id="rptTiempoRespuesta">Descargar</a></div>-->
+                            @* <div class="col-6"> <a class="btn btn-secondary" id="rptTiempoRespuestaVer">Ver</a></div>*@
+                            <!--</div>-->
+
+
+
+
+                        </div>
+                        <br />
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-sm-3">
+
+            <div class="card text-white" id="ReporRojo">
+                <div class="card-body">
+                    <h5 class="card-title"> <span>Solicitudes Terminadas</span></h5>
+
+                    <div class="row">
+                        <div class="col-12">
+
+                            @*<span> Descripcion del reporte</span>*@
+                            <hr />
+                            <a id="rptSolicitudesTerminadas" class="btn btn-secondary" href="@Url.Action("DescargarArchivo","Reporte", new { nombre = "SolicitudesTerminadas"} )">Descargar</a>
+
+                        </div>
+                        <br />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card text-white" id="ReporCeleste">
+                <div class="card-body">
+                    <h5 class="card-title"> <span>Información CDP</span></h5>
+                    <div class="row">
+                        <div class="col-12">
+
+
+                            <hr />
+                            <a id="rptInformacionCDP" class="btn btn-secondary" href="@Url.Action("DescargarArchivo","Reporte", new { nombre = "InformacionCDP"} )">Descargar</a>
+
+
+                        </div>
+                        <br />
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-sm-3">
+            <div class="card text-white" id="ReporMorado">
+                <div class="card-body">
+                    <h5 class="card-title"> <span> Base completa</span></h5>
+
+                    <div class="row">
+                        <div class="col-12">
+
+                            <hr />
+                            <a id="rptSoliciudesBaseCompleta" class="btn btn-secondary" href="@Url.Action("DescargarArchivo","Reporte", new { nombre = "SoliciudesBaseCompleta"} )">Descargar</a>
+
+
+
+                        </div>
+                        <br />
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="card text-white" id="ReporVerde">
+                <div class="card-body">
+                    <h5 class="card-title"> <span>Pendientes por Usuario y Estado</span></h5>
+                    <div class="row">
+                        <div class="col-12">
+
+                            <hr />
+                            <a id="rptSoliciudesUsuarioEstado" class="btn btn-secondary" href="@Url.Action("DescargarArchivo","Reporte", new { nombre = "SoliciudesUsuarioEstado"} )">Descargar</a>
+
+
+
+                        </div>
+                        <br />
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-sm-3">
+            <div class="card text-white" id="ReporNaranjo">
+                <div class="card-body">
+                    <h5 class="card-title"> <span>Montos por Unidad Demandante</span></h5>
+                    <div class="row">
+                        <div class="col-12">
+
+                            <hr />
+                            <a id="rptMontosUnidadDemandante" class="btn btn-secondary" href="@Url.Action("DescargarArchivo","Reporte", new { nombre = "MontosUnidadDemandante"} )">Descargar</a>
+
+
+
+                        </div>
+                        <br />
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<hr />
+
+@*<div class="container tabcontent">
+    <div class="row">
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label><b>Campos Disponibles</b> </label>
+
+                <select id="selectColumnas" class="form-control" multiple="multiple">
+                    <option value="0">Nº Solicitud</option>
+                    <option value="1">Fecha solicitud</option>
+                    <option value="2">Nombre de la Compra</option>
+                    <option value="3">Analista de Compra</option>
+                    <option value="4">Presupuesto</option>
+                    <option value="5">Usuario solicitante</option>
+                    <option value="6">Aprobador actual</option>
+                    <option value="7">Estado</option>
+                    <option value="8">Fase CDP</option>
+                    <option value="9">Folio Requerimiento SIGFE</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label><b>Estados</b> </label>
+                <select id="selectColumnas" class="form-control" multiple="multiple">
+                    <option value="0">Nº Solicitud</option>
+                    <option value="1">Fecha solicitud</option>
+                    <option value="2">Nombre de la Compra</option>
+                    <option value="3">Analista de Compra</option>
+                    <option value="4">Presupuesto</option>
+                    <option value="5">Usuario solicitante</option>
+                    <option value="6">Aprobador actual</option>
+                    <option value="7">Estado</option>
+                    <option value="8">Fase CDP</option>
+                    <option value="9">Folio Requerimiento SIGFE</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label><b>Fecha Inicio</b> </label>
+
+                <input class="form-control" type="date" placeholder="Fecha Inicio" required>
+            </div>
+            <div class="form-group">
+                <label><b>Fecha Fin</b> </label>
+
+                <input class="form-control" type="date" placeholder="Fecha Fin" required>
+            </div>
+        </div>
+
+        <div class="col-sm-2">
+            <div class="form-group">
+
+                <button class="btn btn-primary">Ver</button>
+            </div>
+
+        </div>
+
+    </div>
+
+ 
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="tab-pane fade show active" id="solicitud" role="tabpanel" aria-labelledby="solicitud-tab">
+                <div id ="divtabla" class="mt-3">
+                    
+
+                    
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>*@
+
+
+<div id="modals"></div>
+
+@section Scripts{
+    <script>
+
+        Index = function () {
+
+            $(document).ready(function () {
+                
+
+                $('#divIndicadoresEconomicos').css('display', 'none');
+                $('#divIndicadoresEconomicos').hide();
+
+            });
+
+            return {
+
+                 urlDescargar: "@Url.Action(nameof(ReporteController.DescargarArchivo), "Reporte")",
+                 urlVer: "@Url.Action(nameof(ReporteController.VerReporte), "Reporte")"
+
+
+            }
+
+
+        }();
+
+    </script>
+    <script type="text/javascript" src="~/js/BackOffice/_Reporte.js" asp-append-version="true"></script>
+
+
+}
+

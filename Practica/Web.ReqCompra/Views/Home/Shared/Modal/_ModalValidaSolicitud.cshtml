@@ -1,0 +1,35 @@
+﻿@model SolicitudModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{ }
+
+<div class="modal fade" id="modalSolicitud" tabindex="-1" role="dialog" aria-labelledby="modalSolicitudLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalSolicitudLabel">Validar Solicitud</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="" id="frmSolicitud" asp-action="ValidaSolicitud" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="Id" />
+                    <h6>Información general</h6>
+            
+             
+                   
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" form="frmSolicitud">Validar Solicitud</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    
+}
+

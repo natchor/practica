@@ -1,0 +1,85 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div id="divIndicadoresEconomicos" class="row">
+    <input id="txtUF" type="hidden" value="@ViewBag.uf">
+    <input id="txtDolar" type="hidden" value="@ViewBag.usd">
+    <input id="txtUtm" type="hidden" value="@ViewBag.utm">
+    <input id="txtEuro" type="hidden" value="@ViewBag.eur">
+    <!--<div class="col-4">
+        <div class="contenedor">
+            <p><b>Valores Diarios:</b></p>
+            <ul class="reqUl">
+                <li><p><b>UF:</b> <span style=" color: #e55b00">$@ViewBag.uf</span></p></li>--> @*font-size: 11pt;*@
+                <!--<li><p><b>Dolar:</b> <span style="color: #e55b00">$@ViewBag.usd</span></p></li>
+                <li><p><b>UTM:</b>   <span style="color: #e55b00">$@ViewBag.utm</span></p></li>
+                <li><p><b>Euro:</b>  <span style="color: #e55b00">$@ViewBag.eur</span></p></li>
+            </ul>
+        </div>
+    </div>-->
+    <div class="col-12">
+        <div>
+            <div class="con-animate">
+                <div class="animate1">
+                    <p><b>Valores Diarios:</b></p>
+                    <p><b>UF:</b> <span style="font-size: 11pt; color: #e55b00">$@ViewBag.uf</span></p>
+                    <p><b>Dolar:</b> <span style="font-size: 11pt; color: #e55b00">$@ViewBag.usd</span></p>
+                    <p><b>UTM:</b>   <span style="font-size: 11pt; color: #e55b00">$@ViewBag.utm</span></p>
+                    <p><b>Euro:</b>  <span style="font-size: 11pt; color: #e55b00">$@ViewBag.eur</span></p>
+
+                </div>
+                <div class="animate2">
+                    <p><b>Valores Diarios:</b></p>
+                    <p><b>UF:</b> <span style="font-size: 11pt; color: #e55b00">$@ViewBag.uf</span></p>
+                    <p><b>Dolar:</b> <span style="font-size: 11pt; color: #e55b00">$@ViewBag.usd</span></p>
+                    <p><b>UTM:</b>   <span style="font-size: 11pt; color: #e55b00">$@ViewBag.utm</span></p>
+                    <p><b>Euro:</b>  <span style="font-size: 11pt; color: #e55b00">$@ViewBag.eur</span></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-1 mb-3 border-bottom text-center">
+    <div><h4 class="display-5"><strong>@ViewData["Title"]</strong></h4></div>
+    @*<div><form asp-controller="Home" asp-action="FormSubmit" method="post" class="form-horizontal"><button id="ingresarSolId" type="submit" class="btn btn-outline-success btn-lg">Ingresar Solicitud</button> </form> </div>*@
+    <div>
+        @if (ViewData["Title"].ToString().ToUpper() == "COMPRAS" && Context.User.FindFirst(PermissionsClaims.IngresaSolicitud).Value._toBool())
+        {
+            <a id="ingresarSolId" asp-action="Index" asp-controller="Solicitud" class="btn btn-outline-primary btn-lg"><i class="fas fa-plus"></i> Ingresar Solicitud</a>
+        }
+    </div>
+
+    @*<div></div>
+        <div></div>
+        <div></div>
+        <div>
+            <p> @Context.User.FindFirst(CustomClaims.FullName).Value</p>
+            <p> @Context.User.FindFirst(CustomClaims.RoleStr).Value</p>
+        </div>*@
+
+
+</div>
+
+
+
+<!--<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Ministerio de Energia</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>-->
+@*<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">*@
+<!--<ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            @if (Context.User.Identity.IsAuthenticated)
+            {
+                <form class="d-flex" asp-action="Logout" asp-controller="Login">
+
+                    <button class="btn btn-outline-warning" type="submit">Salir</button>
+                </form>
+            }
+        </li>
+    </ul>
+</header>-->

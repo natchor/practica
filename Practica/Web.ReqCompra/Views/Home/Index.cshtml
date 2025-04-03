@@ -1,0 +1,82 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<!--@{
+    ViewData["Title"] = "Compras";
+}-->
+
+@section Styles {
+
+    <link href="~/lib/HemantNegi-jquery.sumoselect/sumoselect.css" rel="stylesheet" />
+
+}
+
+<div class="tab">
+    <div><button id="aprovacionesId" class="btn-outline-primary bandejas" type="button">Mis Aprobaciones Pendientes</button></div>
+    @if (Context.User.FindFirst(PermissionsClaims.VePorFinalizar).Value._toBool())
+    {
+        <div><button id="PendientesId" class="btn-outline-primary bandejas" type="button">Por Finalizar</button></div>
+    }
+    <div><button id="misSolicitudesId" class="btn-outline-primary bandejas" type="button">Mis Solicitudes</button></div>
+
+    @if (Context.User.FindFirst(PermissionsClaims.VeGestionSolicitudes).Value._toBool())
+    {
+        <div><button id="gestionId" class="btn-outline-primary bandejas" type="button">Gestión de Solicitudes</button></div>
+    }
+
+    @if (Context.User.FindFirst(PermissionsClaims.VeMisGestiones).Value._toBool())
+    {
+        <div><button id="divMiGestion" class="btn-outline-primary bandejas" type="button">Mis Gestiones</button></div>
+    }
+    
+
+</div> 
+
+
+
+<div class="tabcontent">
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="divSolicitudes">
+                @*<partial name="Shared/Tablas/_TablaMisAprobaciones" />*@
+            </div>
+            @*<partial name="Shared/Modal/_ModalValidaSolicitud" />*@
+        </div>
+    </div>
+</div>
+
+@*<partial name="Shared/Modal/_ModalValidaSolicitud" />*@
+<div id="modals"></div>
+
+@section Scripts{
+    <script>
+
+        Index = function () {
+
+            $(document).ready(function () {
+
+            });
+
+
+            return {
+                urlGetSolicitudes: "@Url.Action(nameof(HomeController.GetSolicitudes), "Home")",
+                urlGetPorFinalizar: "@Url.Action(nameof(HomeController.GetPorFinalizar), "Home")",
+                urlGetMisAprobaciones: "@Url.Action(nameof(HomeController.GetMisAprobaciones), "Home")",
+                urlGetGestion: "@Url.Action(nameof(HomeController.GetGestion), "Home")",
+                urlGetMisGestiones: "@Url.Action(nameof(HomeController.GetMisGestiones), "Home")",
+                urlSelectEstados: "@Url.Action(nameof(HomeController.GetEstadosForSelect), "Home")",
+                urlSetEstadoLic: "@Url.Action(nameof(HomeController.SetEstadoLicitacion), "Home")",
+                urlGetLisEstadoLic: "@Url.Action(nameof(HomeController.GetListEstadoLicitacion), "Home")",
+                urlFechaContrato: "@Url.Action(nameof(HomeController.SetFechaContrato), "Home")",
+
+            }
+
+        }();
+
+    </script>
+
+
+    <script src="~/lib/HemantNegi-jquery.sumoselect/jquery.sumoselect.js"></script>
+    <script src="~/js/_Home.js" asp-append-version="true"></script>
+}
+

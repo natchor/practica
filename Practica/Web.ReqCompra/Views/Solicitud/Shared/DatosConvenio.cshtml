@@ -1,0 +1,105 @@
+﻿@model SolicitudModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    bool esAprobar = ViewBag.Accion == Acciones.Aprobar;
+    bool esVer = ViewBag.Accion == Acciones.Ver;
+    bool esEditar = ViewBag.Accion == Acciones.Editar;
+    bool esIngresar = ViewBag.Accion == Acciones.Ingresar;
+
+    bool disabled = false;
+    string permiteEditar = esEditar || esIngresar ? "false" : "disabled";
+
+    bool ingresarRequerimientoSIGFE = false;
+    bool ingresarCompromisoSIGFE = false;
+    //ConvenioModel convenio = @model.Convenio
+
+    if (esVer)
+    {
+
+        ingresarCompromisoSIGFE = ViewBag.IngresaComprimisoSIGFE;
+    }
+
+    if (esAprobar)
+    {
+        ingresarRequerimientoSIGFE = ViewBag.IngresaRequerimientoSIGFE;
+    }
+
+    //int.TryParse(ViewBag.SectorDemandanteId, out int solicitudId);
+
+    //if (Model != null)
+    //{
+    //    disabled = !esEditar;
+    //    solicitudId = Model.SolicitudId;
+
+    //}
+}
+
+
+<div class="card bg-light CardTr text-dark" >
+    <div class="card-body">
+        <h5 class="card-title">Datos Convenio</h5>
+        <div class="row">
+            <div class="col-12 col-sm-12">
+                <div class="cssToolTip">
+                    <div class="form-group">
+                        <label><b> Glosa con detalle de convenio para Certificado de Saldo</b> </label>
+                        <textarea class="form-control"  id="txtAntecedente" placeholder="Ingrese la glosa que desea aparezca en el apartado de identificación del Convenio de el Certificado de Saldo." rows="3" disabled></textarea>
+                    </div>
+                    @*<span id="txtObservacionGeneraltool">Ingrese toda información adicional a la compra ejem: rut proveedor.</span>*@
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+
+            <div class="col-3 col-sm-4">
+                <div class="form-group">
+                    <label ><b>Número Cuenta Corriente</b> </label>
+                    <input id="txtIDCuentaCorriente" disabled class="form-control" placeholder="N° Cuenta Corriente" maxlength="50">
+                </div>
+            </div>
+
+            <div class="col-4 col-sm-4">
+                <div class="form-group">
+                    <label ><b>Saldo Cuenta</b> </label>
+                    <input id="txtIDSaldoCuenta" disabled class="form-control" placeholder="Saldo cuenta" maxlength="20">
+                </div>
+            </div>
+
+            <div class="col-4 col-sm-4">
+                <div class="form-group">
+                    <label ><b>Banco</b> </label>
+                    <input id="txtIDBanco" disabled class="form-control" placeholder="Banco" maxlength="50">
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row d-print-none">
+            <div class="col-6 col-sm-6">
+                <a target="_blank" class="btn btn-outline-success" data-fasecs="@Model.FaseCDP" asp-controller="BackOffice" asp-action="CS" asp-route-solicitudId=@Model.Id id="btnCS">
+                    <i class="far fa-eye"></i>
+
+                    <span id="cdpVerId">Ver CS</span>
+
+                </a>
+                @if (Model.ValidacionCDP)
+                {
+                    <a target="_blank" class="btn btn-outline-success" id="btnDescargarCS" asp-controller="BackOffice" asp-action="CS" asp-route-solicitudId="@Model.Id">
+                        <i class="fas fa-save"></i>
+                        <span id="btnDescargarCSGlosa">Descargar CS</span>
+                    </a>
+                }
+
+            </div>
+            
+                <div class="col-6 col-sm-6">
+                <button type="button" id="btnAutorizaCS" disabled class="btn btn-outline-success"> <i class="fas fa-file-signature"></i>Aprobar Certificado de Saldo</button>
+
+                </div>
+            
+        </div>
+ 
+    </div>
+</div>

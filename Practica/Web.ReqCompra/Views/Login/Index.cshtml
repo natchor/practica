@@ -1,0 +1,100 @@
+﻿@model UserLoginModel
+@{
+    Layout = null;
+
+    var returnUrl = Context.Request.Query["ReturnUrl"];
+}
+
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Ingresar · Requerimientos de compras</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
+
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Fontawesome -->
+    <link href="~/lib/fontawesome/css/all.css" rel="stylesheet" />
+
+
+    <!-- Custom styles for this template -->
+    <link href="~/css/signin.css" rel="stylesheet" />
+</head>
+<body class="text-center">
+
+    <main class="form-signin">
+        <form id="frmLogin" asp-action="LoginNow" asp-controller="Login" asp-route-ReturnUrl="@returnUrl" method="post">
+
+
+            <img class="mb-4" src="~/img/Logo.png" alt="" width="150" height="150">
+
+
+            <div class="card bg-light text-dark">
+
+                
+
+
+                <div class="card-body">
+
+                    <environment include="Development">
+                        <div class="form-group text-center pt-3">
+                            <h1 class="h3 mb-3 fw-normal">Ingresar en ambiente Desarrollo</h1>
+                        </div>
+                    </environment>
+
+                    <environment include="QA">
+                        <div class="form-group text-center pt-3">
+                            <h1 class="h3 mb-3 fw-normal">Ingresar en ambiente QA</h1>
+                        </div>
+                    </environment>
+
+                    <environment exclude="Development,QA">
+                        <div class="form-group text-center pt-3">
+                            <h1 class="h3 mb-3 fw-normal">Ingresar</h1>
+                        </div>
+                    </environment>
+
+                    <div class="form-group mx-sm-4 pt-3">
+                        @*<label asp-for="UserName" >Nombre de Usuario</label>*@
+                        <input asp-for="UserName" class="form-control" placeholder="Nombre de Usuario" required autofocus>
+                    </div>
+
+
+
+                    <div class="form-group mx-sm-4 pt-3">
+                        @*<label asp-for="Password" >Clave</label>*@
+                        <input type="password" asp-for="Password" class="form-control" placeholder="Clave" required>
+                    </div>
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group mx-sm-4 pb-2">
+                        <button class="w-100 btn btn-lg btn-primary" type="submit"><i class="fas fa-sign-in-alt"></i> Ingresar</button>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <p class="mt-5 mb-3 text-muted">&copy; @DateTime.Now.ToString("yyyy") Versión 2.1.6</p>
+
+        </form>
+    </main>
+
+
+    <!-- Fontawesome -->
+    <script src="~/lib/fontawesome/js/all.js"></script>
+
+</body>
+</html>
+
+
+

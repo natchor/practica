@@ -1,0 +1,162 @@
+﻿@model SolicitudModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    bool esAprobar = ViewBag.Accion == Acciones.Aprobar;
+    bool esVer = ViewBag.Accion == Acciones.Ver;
+    bool esEditar = ViewBag.Accion == Acciones.Editar;
+    bool esIngresar = ViewBag.Accion == Acciones.Ingresar;
+
+    bool disabled = false;
+    string permiteEditar = esEditar || esIngresar ? "false" : "disabled";
+
+    bool ingresarRequerimientoSIGFE = false;
+    bool ingresarCompromisoSIGFE = false;
+
+    if (esVer)
+    {
+
+        ingresarCompromisoSIGFE = ViewBag.IngresaComprimisoSIGFE;
+    }
+
+    if (esAprobar)
+    {
+        ingresarRequerimientoSIGFE = ViewBag.IngresaRequerimientoSIGFE;
+    }
+
+    int.TryParse(ViewBag.SectorDemandanteId, out int sectorDemandanteId);
+
+    if (Model != null)
+    {
+        disabled = !esEditar;
+        sectorDemandanteId = Model.UnidadDemandanteId;
+
+    }
+}
+
+
+<div class="card bg-light CardTr text-dark">
+    <div class="card-body">
+        <h5 class="card-title">Datos Presupuestarios</h5>
+        <div class="row">
+            <div class="col-6 col-sm-6">
+                
+                    <div class="form-group">
+                        <label asp-for="UnidadDemandanteId"><b>Unidad Demandante</b></label>
+                        <select asp-for="UnidadDemandanteId" disabled="@disabled" data-valor="@sectorDemandanteId" class="form-control UnidadD" id="txtUnidadDemandante" required>
+                        </select>
+                    </div>
+                
+            </div>
+
+            <div class="col-6 col-sm-6">
+                
+                    <div class="form-group">
+                        <label asp-for="ProgramaPresupuestarioId "><b>Programa Presupuestario</b> </label>
+                        <select asp-for="ProgramaPresupuestarioId" disabled="@disabled" data-valor="@Model?.ProgramaPresupuestarioId" class="form-control" id="txtProgramaPresupuestario" required>
+
+                            @foreach (ProgPresSelectModel item in ViewBag.ProgPresSelectModel)
+                            {
+                                <option value="@item.Id">@item.Nombre</option>
+                            }
+                        </select>
+                    </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            
+            <div class="col-3 col-sm-3">            
+                    <div class="form-group">
+                        <label asp-for="IniciativaVigenteId"><b>ID Iniciativa Vigente</b> </label>
+                        <input asp-for="IniciativaVigenteId" id="IDIniciativaVigente" readonly="@disabled" class="form-control" placeholder="ID Iniciativa vigente " maxlength="50" required>
+                    </div>
+            </div>
+
+            <div class="col-4 col-sm-4">
+                    <div class="form-group">
+                        <label asp-for="IniciativaVigente"><b>Iniciativa Vigente</b> </label>
+                        <input asp-for="IniciativaVigente" id="IDNombreIniciativaVigente" readonly="@disabled" class="form-control" placeholder="Nombre Iniciativa vigente" maxlength="200" required>
+                    </div>
+            </div>
+
+            <div class="col-5 col-sm-5">
+                    <div class="form-group">
+                        <label asp-for="ConceptoPresupuestarioId "><b>Concepto Presupuestario </b></label>
+                        <select asp-for="ConceptoPresupuestarioId" data-valor="@Model?.ConceptoPresupuestarioId" disabled="@permiteEditar" class="form-control" id="txtConceptoPresupuestario" required>
+                        </select>
+ 
+                </div>
+
+            </div>
+        </div>
+        <br />
+        @if (Model != null)
+        {
+
+            <div id="DivSoloPresupuestoId">
+                <div class="row">
+                    <div class="col-6 col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="FolioRequerimientoSIGFE "><b>Folio Requerimiento SIGFE</b> </label>
+                            <input asp-for="FolioRequerimientoSIGFE " class="form-control" id="txtFolioRequerimientoSIGFE" maxlength="4" disabled="@(!(ingresarRequerimientoSIGFE))" autofocus placeholder="Folio Requerimiento SIGFE">
+                        </div>
+
+                    </div>
+                    @if (Model.ValidacionCDP)
+                    {
+                        <div class="col-6 col-sm-6">
+                            <div class="form-group">
+                                <label asp-for="FoliocompromisoSIGFE "><b>Folio Compromiso SIGFE </b></label>
+                                <input asp-for="FoliocompromisoSIGFE " class="form-control" id="txtFolioCompromisoSIGFE" maxlength="4" disabled="@( !(ingresarCompromisoSIGFE))" placeholder="Folio Compromiso SIGFE">
+
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div id="loader" class="align-items-center" style="display:none;">
+                    <strong>Guardando Folios...</strong>
+                    <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+                </div>
+                <div id="folioGuardadoMsje" style="display:none;">
+                    <strong class="text-success">Folios SIGFE guardados</strong>
+                </div>
+                <br />
+                <div class="row d-print-none">
+                    <div class="col-6 col-sm-6">
+                        <a target="_blank" class="btn btn-outline-success" id="btnCDP" data-fasecdp="@Model.FaseCDP" asp-controller="BackOffice" asp-action="CDP" asp-route-solicitudId="@Model.Id">
+                            <i class="far fa-eye"></i>
+                            @if (!Model.ValidacionCDP)
+                            {
+                                <span id="cdpVerId">Borrador CDP</span>
+                            }
+                            else
+                            {
+                                <span id="cdpVerId">Ver CDP</span>
+
+                                @if (Model.ValidacionCDP)
+                                {
+                                    <a target="_blank" class="btn btn-outline-success" id="btnDescargarCDP" asp-controller="BackOffice" asp-action="CDP" asp-route-solicitudId="@Model.Id">
+                                        <i class="fas fa-save"></i>
+                                        <span id="btnDescargarCDP">Descargar CDP</span>
+                                    </a>
+                                }
+                            }
+                        </a>     
+                    </div>
+                    @if (!Model.ValidacionCDP && Context.User.FindFirst(PermissionsClaims.ApruebaCDP).Value._toBool() && esAprobar)
+                    {
+                        <div class="col-6 col-sm-6">
+                            <button type="button" id="btnAutorizaCDP" data-access="@Context.User.FindFirst(PermissionsClaims.ApruebaCDP).Value._toBool()" class="btn btn-outline-success"> <i class="fas fa-file-signature"></i>Aprobar CDP</button>
+
+                        </div>}
+                </div>
+
+                <br />
+            </div>
+
+        }
+    </div>
+</div>

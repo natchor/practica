@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Usuarios";
+}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom text-center">
+    <div>
+        <a href="/Usuario/EditarUsuario/0" class="btn btn-outline-success btn-lg">Crear Usuario</a>
+    </div>
+
+</div>
+
+<div class="">
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="divUsuario"></div>
+            <div class="tab-pane fade show active" id="solicitud" role="tabpanel" aria-labelledby="solicitud-tab">
+                <div id="divUsuarios">
+               
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-11">
+            <button type="button" id="btnRegresarMantenedor" class="btn btn-primary">Regresar</button>
+        </div>
+    </div>
+    <br />
+</div>
+
+
+<div id="modals"></div>
+
+@section Scripts{
+    <script>
+
+        IndexUrl = function () {
+             return {
+                    urlGetUsuarios: "@Url.Action(nameof(UsuarioController.GetUsuarios), "Usuario")"
+                }
+
+        }();
+
+    </script>
+     <script type="text/javascript" src="~/js/Usuario/Index.js" asp-append-version="true"></script>
+
+}
+

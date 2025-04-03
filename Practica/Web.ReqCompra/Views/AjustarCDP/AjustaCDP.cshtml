@@ -1,0 +1,396 @@
+﻿
+@{
+    ViewData["Title"] = "Ajustar CDP";
+
+
+}
+@section Styles{
+    <link href="~/lib/dropzone-5.7.0/dist/dropzone.css" rel="stylesheet" />
+    <link href="~/css/dropzone.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/css/ajustarCDP.css">
+}
+
+<div class="row">
+    <div class="col-3">
+
+        <input class="form-control form-control-lg" maxlength="12" id="solicitudBuscarId" data-toggle="tooltip" data-placement="top" title="Ingrese año y número de solicitud los 0 son opcionales" value="@DateTime.Now.Year - 0">
+
+    </div>
+    <div class="col-1"> <input type="button" value="Buscar Solicitud" class="btn btn-outline-success btn-lg" id="btnAprobacionId"></div>
+
+
+
+</div>
+<br />
+
+
+<input type="hidden" id="IdSolicitud" />
+<input type="hidden" id="NroSolicitud" />
+
+
+<div class="tabcontent" style="display: none" id="contentAjusteCDP" >
+    <div class="row">
+        @*<div class="col-sm-6">
+
+
+            <partial name="../Solicitud/Shared/IdentificacionCompra" model="Model" />
+
+
+
+        </div>*@
+
+        <div class="col-sm-6">
+            <div class="card bg-light CardTr text-dark">
+                <div class="card-body">
+                    <h5 class="card-title">Identificación de la Compra  </h5>
+                    @*<br />*@
+                    <div class="row">
+
+                        <div class="col-5 col-sm-5">
+                            <input class="form-control form-control-sm" type="text" placeholder="Nombre Solicitante" value=ejemplo id="IDNombreSolicitante" readonly>
+                        </div>
+
+                        <div class="col-5 col-sm-5">
+
+                            <input class="form-control form-control-sm" type="text" placeholder="Nombre sector solicitante" value=ejemplo id="IDDepartamentoSolicitante" readonly>
+
+                        </div>
+
+                        <div class="col-2 col-sm-2">
+                            <input class="form-control form-control-sm" type="text" placeholder="Fecha Solicitud" value=ejemplo id="IDFechaSolicitud" readonly>
+                        </div>
+                    </div>
+
+
+                    @* <br />*@
+                    <div class="row">
+                        <div class="col-6 col-sm-6">
+                            <div class="form-group">
+                                <div class="cssToolTip">
+                                    <label><b>Nombre de la Compra</b> </label>
+                                    <textarea class="form-control form-control-sm" readonly id="txtNombreCompra" maxlength="200" rows="2" value=ejemplo autofocus></textarea>
+
+
+                                    @* <span>Nombre o identificación de la compra.<br />Si contiene mucho texto agrande la casilla desde la esquina inferior derecha </span>*@
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-6 col-sm-6">
+                            <div class="cssToolTip">
+                                <div class="form-group">
+                                    <label><b>Justificación de  Compra</b></label>
+                                    <textarea class="form-control form-control-sm" readonly id="txtObjetivoJustificacion" rows="2" value=ejemplo required></textarea>
+                                    @*<span>Justificación de la compra.<br />Si contiene mucho texto agrande la casilla desde la esquina inferior derecha </span>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<br />*@
+                    <div class="row">
+                        <div class="col-12 col-sm-12">
+                            <div class="cssToolTip">
+                                <div class="form-group">
+                                    <label><b>Comentarios adicionales de la compra</b> </label>
+                                    <textarea class="form-control form-control-sm" readonly id="txtObservacionGeneral" value=ejemplo rows="2"></textarea>
+                                </div>
+                                @*<span id="txtObservacionGeneraltool">Ingrese toda información adicional a la compra ejem: rut proveedor.</span>*@
+                            </div>
+                        </div>
+                    </div>
+                    @*<br />*@
+                    <div class="row">
+                        <div class="col-12 col-sm-12">
+                            <div class="cssToolTip">
+                                <div class="form-group">
+                                    <label><b>Responsable recepción conforme</b> </label>
+
+                                    <input type="text" disabled="disabled" class="form-control form-control-sm" id="txtContraparteTecnica" value="ejemplo" readonly>
+                                </div>
+                                @*<span id="txtContraparteTecnicatool">Ingrese un valor.</span>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-sm-6">
+
+            <div class="card bg-light CardTr text-dark">
+                <div class="card-body">
+                    <h5 class="card-title">Datos Presupuestarios</h5>
+                    <div class="row">
+                        <div class="col-6 col-sm-6">
+
+                            <div class="form-group">
+                                <label><b>Unidad Demandante</b></label>
+                                <input type="text" disabled="disabled" class="form-control form-control-sm" id="txtUnidadDemandante" value="ejemplo" readonly>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-6 col-sm-6">
+
+                            <div class="form-group">
+                                <label><b>Programa Presupuestario</b> </label>
+
+                                <input type="text" class="form-control form-control-sm" id="txtProgramaPresupuestario" value="ejemplo" readonly>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <br /> -->
+                    <div class="row">
+
+                        <div class="col-3 col-sm-3">
+                            <div class="form-group">
+                                <label> <b>ID Iniciativa</b> </label>
+                                <input readonly id="IDIniciativaVigente" class="form-control form-control-sm" placeholder="ID Iniciativa vigente " maxlength="50" required>
+                            </div>
+                        </div>
+
+                        <div class="col-4 col-sm-4">
+                            <div class="form-group">
+                                <label><b>Iniciativa Vigente</b> </label>
+                                <input readonly id="IDNombreIniciativaVigente" class="form-control form-control-sm" placeholder="Nombre Iniciativa vigente" maxlength="200" required>
+                            </div>
+                        </div>
+
+                        <div class="col-5 col-sm-5">
+                            <div class="form-group">
+                                <label><b>Concepto Presupuestario </b></label>
+
+                                <input readonly id="txtConceptoPresupuestario" class="form-control form-control-sm" placeholder="Nombre Iniciativa vigente" maxlength="200" required>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- <br /> -->
+
+                    <div id="DivSoloPresupuestoId">
+                        <div class="row">
+                            <div class="col-6 col-sm-6">
+                                <div class="form-group">
+                                    <label><b>Folio Requerimiento SIGFE</b> </label>
+                                    <input readonly class="form-control form-control-sm" id="txtFolioRequerimientoSIGFE" maxlength="4" autofocus placeholder="Folio Requerimiento SIGFE">
+                                </div>
+
+                            </div>
+
+                            <div class="col-6 col-sm-6">
+                                <div class="form-group">
+                                    <label><b>Folio Compromiso SIGFE </b></label>
+                                    <input readonly class="form-control form-control-sm" id="txtFolioCompromisoSIGFE" maxlength="4" placeholder="Folio Compromiso SIGFE">
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <br />
+                        @*<div class="row d-print-none">
+                            <div class="col-6 col-sm-6">
+                                <a target="_blank" class="btn btn-outline-success" id="btnCDP" asp-controller="BackOffice" asp-action="CDP" asp-route-solicitudId=60>
+                                    <i class="far fa-eye"></i>
+                                    <span>Ver CDP</span>
+                                </a>
+
+                            </div>
+
+                        </div>*@
+
+                        <!-- <br /> -->
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-6">
+
+            <div class="card bg-light CardTr text-dark">
+                <div class="card-body">
+                    <h5 class="card-title">Datos Montos</h5>
+
+
+                    <div class="row">
+                        <div class="col-4 col-sm-4">
+                            <div class="form-group">
+                                <label><b>Compra Anual-Multianual</b></label>
+                                
+                                <input class="form-control" type="text" placeholder="Fecha Solicitud" value=ejemplo id="txtModalidadCompra" readonly>
+                            </div>
+                        </div>
+
+
+                        <div class="col-4 col-sm-4">
+                            <div class="form-group">
+                                <label><b>Modalidad de Compra</b> </label>
+
+                                <input class="form-control" type="text" placeholder="Fecha Solicitud" value=ejemplo id="txtTipoCompra" readonly>
+                                @*<span id="txtProgramaPresupuestariotool"></span>*@
+                                <small class="text-danger d-print-none" id="msjeTipoCompra" style="display: none;">@*Solicitud debera ser aprobada por Gabinete.*@</small>
+                            </div>
+                        </div>
+
+                        <div class="col-4 col-sm-4">
+                            <div class="form-group">
+                                <label><b>Tipo de Moneda </b></label>
+
+                                <input class="form-control" type="text" placeholder="Fecha Solicitud" value=ejemplo id="txtTipoMoneda" readonly>
+
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="col-6 col-sm-6">
+                            <label><b>Monto estimado total OC</b> </label>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text" name="simboloDivisa">$</span>
+                                <input readonly data-type="monto" class="form-control fa-sort-numeric-asc" id="txtMontoAprox" placeholder="Monto OC" required>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label><b>Monto UTM </b></label>
+                                <input data-type="monto"  class="form-control" id="txtMontoUTM" readonly>
+                            </div>
+
+                            <div>
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-5 col-sm-5" id="divMultianual">
+                            <label><b>Monto año @(DateTime.Now.ToString("yyyy"))</b> </label>
+                            <div class="input-group mb-5">
+                                <span class="input-group-text" name="simboloDivisa">$</span>
+                                <input readonly data-type="monto" disabled="disabled" class="form-control fa-sort-numeric-asc Anuales" id="txtMontoAnhoActual" name="SolicitudDetalle" placeholder="Monto año @(DateTime.Now.ToString("yyyy"))" data-anio="@(DateTime.Now.ToString("yyyy"))" required>
+                                @*<button type="button" id="btnMasAnios" class="btn btn-primary"><i class="fas fa-plus"></i></button>*@
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-sm-6">
+
+            <div class="card bg-light CardTr text-dark">
+                <div class="card-body">
+                    <h5 class="card-title">Ajustar Montos</h5>
+
+                    <div class="row">
+                        <div class="col-6 col-sm-6">
+                            <label><b>Monto total OC</b> </label>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text" name="simboloDivisa">$</span>
+                                <input  data-type="monto" class="form-control fa-sort-numeric-asc" id="txtMontoOC" placeholder="Monto OC" required>
+
+                            </div>
+
+                            <div class="form-group">
+
+                        <div class="form-group">
+                            <label><b>Generar arrastre</b></label>
+                             <div class="form-check form-switch form-control-lg">
+                              <input class="form-check-input" type="checkbox" role="switch" id="txtArrastre">
+                              <label class="form-check-label" for="txtEstado"></label>
+                            </div>
+                        </div>
+                    
+
+                                <button type="button" id="btnAjustarCDP"  class="btn btn-outline-success"> <i class="fas fa-file-signature"></i>Ajustar CDP</button>
+                            </div>
+                        </div>
+                        <div class="col-5 col-sm-5" id="divMultianual2">
+                            
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <br />
+    <div class="row">
+
+        <div><partial name="../Solicitud/Shared/Bitacora" model="Model" /> </div>
+
+    </div>
+    <div class="row">
+
+        <div><partial name="../Solicitud/Shared/BitacoraArchivos" model="Model" /></div>
+
+        
+    </div>
+
+</div>
+    
+
+
+
+@section Scripts{
+    <script>
+
+        Index = function () {
+
+            $(document).ready(function () {
+                $('#divIndicadoresEconomicos').css('display', 'none');
+                //$('#tblAprobacion').DataTable();
+                $('#divIndicadoresEconomicos').hide();
+
+                // $("#divIndicadoresEconomicos").slideUp();
+
+            });
+
+            return {
+                urlGetBuscaSolicitud: "@Url.Action(nameof(AjustarCDPController.GetBuscaSolicitud), "AjustarCDP")",
+
+                urlAprobaciones: "@Url.Action(nameof(SolicitudController.AprobacionesBita), "Solicitud")",
+                urlBitacora: "@Url.Action(nameof(SolicitudController.Bitacora), "Solicitud")",
+                urlBitacoraArchivos: "@Url.Action(nameof(SolicitudController.BitacoraArchivo), "Solicitud")",
+
+                urlDetalleSolicitud: "@Url.Action(nameof(SolicitudController.FindDetalleBySolicitudId), "Solicitud")",
+                urlGuardarArchivo: "@Url.Action(nameof(SolicitudController.GuardarArchivo), "Solicitud")",
+
+                urlAjustarSolicitud: "@Url.Action(nameof(AjustarCDPController.AjustaSolicitud), "AjustarCDP")",
+                urlGetContraparteTecnica: "@Url.Action(nameof(SolicitudController.GetContraparteTecnica), "Solicitud")",
+
+
+
+            }
+
+
+        }();
+
+    </script>
+
+    <script type="text/javascript" src="~/js/BackOffice/_AjustarCDP.js" asp-append-version="true"></script>
+    <script src="~/lib/dropzone-5.7.0/dist/dropzone.js"></script>
+    <script src="~/js/DropzoneConfig.js" asp-append-version="true"></script>
+
+}
+

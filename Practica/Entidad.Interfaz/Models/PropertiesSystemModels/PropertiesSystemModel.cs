@@ -1,0 +1,10 @@
+﻿namespace Entidad.Interfaz.Models.PropertiesSystemModels
+{
+    public class PropertiesSystemModel
+    {
+        public int Id { get; set; }
+        public string Codigo { get; set; }
+        public string Nombre { get; set; }
+        public string Valor { get; set; }
+    }
+}

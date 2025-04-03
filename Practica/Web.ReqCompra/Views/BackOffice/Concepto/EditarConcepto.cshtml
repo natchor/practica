@@ -1,0 +1,82 @@
+﻿@model ConceptoPresupuestarioModel
+@{
+    ViewData["Title"] = "Editar Concepto Presupuestario";
+}
+
+
+<div class="container">
+    @*<form id="frmEditar" asp-action="EditarConcepto" asp-controller="BackOffice" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">*@
+        <div class="card bg-light text-dark">
+            <div class="card-body">
+                <h5 class="card-title">@ViewBag.Titulo</h5>
+                <br />
+                <input id="ConceptoId" name="ConceptoId" type="hidden" value="@ViewBag.Id" />
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label asp-for="Nombre"><b>Nombre</b></label>
+                        <input class="form-control" type="text" id="txtNombre" placeholder="Nombre">
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="Estado"><b>Estado</b></label>
+                            <select asp-for="Estado" class="form-control" id="txtEstado">
+                                <option value="True" data-valor="true">Activo</option>
+                                <option value="False" data-valor="false">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <br />
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label asp-for="Codigo"><b>Código</b></label>
+                        <input class="form-control" type="text" id="txtCodigo" placeholder="Código">
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label asp-for="SectorPertinenciaId"><b>Pertinencia</b></label>
+                                <select asp-for="SectorPertinenciaId" class="form-control" id="txtPertinencia">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-sm-11">
+                <button type="button" id="btnConceptoEditar" class="btn btn-primary">@ViewBag.Titulo</button>
+                <button type="button" id="btnRegresarConcepto" class="btn btn-outline-secondary">Regresar</button>
+            </div>
+        </div>
+        <br />
+    @*</form>*@
+</div>
+@section Scripts{
+    <script>
+
+        EditaConcepto = function () {
+
+            $(document).ready(function () {
+                $('#divIndicadoresEconomicos').css('display', 'none');
+                $('#divIndicadoresEconomicos').hide();
+            });
+
+
+             return {
+                urlPostCargar: "@Url.Action(nameof(Web.ReqCompra.Controllers.BackOfficeController.PostCargar), "BackOffice")",
+                urlPostGrabar: "@Url.Action(nameof(Web.ReqCompra.Controllers.BackOfficeController.PostGrabarConcepto), "BackOffice")",
+                urlGetSector: "@Url.Action(nameof(Web.ReqCompra.Controllers.SolicitudController.GetSector), "Solicitud")",
+             }
+
+        }();
+
+    </script>
+    <script type="text/javascript" src="~/js/BackOffice/_EditarConceptoPre.js"asp-append-version="true"></script>
+}
+
+

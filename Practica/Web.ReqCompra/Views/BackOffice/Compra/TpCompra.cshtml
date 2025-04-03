@@ -1,0 +1,83 @@
+﻿@{
+    ViewData["Title"] = "Tipo Compra";
+}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom text-center">
+    <div>
+     <a href="/Compra/EditarCompra/0" class="btn btn-outline-success btn-lg">Crear Tipo Compra</a>
+    </div>
+
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="divTpCompra"></div>
+            <div class="tab-pane fade show active" id="solicitud" role="tabpanel" aria-labelledby="solicitud-tab">
+                <div class="mt-3">
+                    <table id="tblTpCompra" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Identificador
+                                </th>
+                                <th>
+                                    Nombre
+                                </th>
+                                <th>
+                                    Estado
+                                </th>
+                                <th>
+                                    Acciones
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (TipoCompraModel TpCompra in ViewBag.tablaCompra)
+                            {
+                                <tr>
+                                    <td>@TpCompra.Id</td>
+                                    <td>@TpCompra.Nombre</td>
+                                    <td>@((bool)TpCompra.Estado ? "Activo" : "Inactivo")</td>
+                                    <td><a href="/Compra/EditarCompra/@TpCompra.Id"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-11">
+            <button type="button" id="btnRegresarMantenedor" class="btn btn-primary">Regresar</button>
+        </div>
+    </div>
+    <br />
+</div>
+
+
+<div id="modals"></div>
+
+@section Scripts{
+    <script>
+
+        Index = function () {
+
+            $(document).ready(function () {
+                $('#tblTpCompra').DataTable();
+                $('#divIndicadoresEconomicos').css('display', 'none');
+                $('#divIndicadoresEconomicos').hide();
+            });
+
+        }();
+
+    </script>
+    <script type="text/javascript" src="~/js/BackOffice/_EditarTpCompra.js" asp-append-version="true"></script>
+
+}
+

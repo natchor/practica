@@ -1,0 +1,227 @@
+﻿@model SolicitudModel;
+@{
+    ViewData["Title"] = ViewBag.PageName;
+    bool esAprobar = ViewBag.Accion == Acciones.Aprobar;
+    bool esVer = ViewBag.Accion == Acciones.Ver;
+    bool esEditar = ViewBag.Accion == Acciones.Editar;
+    bool esIngresar = ViewBag.Accion == Acciones.Ingresar;
+    bool esGenerarOC = ViewBag.Accion == Acciones.GenerarOC;
+    
+    
+    
+    bool CertificadoSaldo = (ViewBag.CertificadoSaldo)?true:false;
+
+    bool estaFinalizado = false;
+
+    bool disabled = false;
+
+    bool estaFinalizada = false;
+
+    if (esVer)
+    {
+        estaFinalizada = ViewBag.estaFinalizada;
+    }
+
+    if (Model != null)
+    {
+        disabled = !esEditar;
+        estaFinalizado = Model.EstadoId == Estados.Finalizada;
+    }
+
+}
+
+ 
+
+@section Styles {
+
+    <link href="~/lib/dropzone-5.7.0/dist/dropzone.css" rel="stylesheet" />
+    <link href="~/css/dropzone.css" rel="stylesheet" />
+    <link href="~/css/Solicitud.css" rel="stylesheet" />
+}
+
+
+<div class="container mb-5 mt-4" id="frmContainer">
+    <div class="d-flex justify-content-end d-print-none">
+        <a id="printFrm" href="#" style="text-decoration: none !important">
+            <i class="fas fa-print" ></i> Imprimir
+        </a>
+        
+    </div>
+
+    <form id="frmSolicitud" data-estaFinalizada="@estaFinalizado" data-rutaOrigen="@ViewBag.rutaOrigen" asp-route-returnurl="@ViewData["ReturnUrl"]">
+
+
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="NroSolicitud" />
+        <input type="hidden" id="hdnCertificadoSaldo" value="@ViewData["CertificadoSaldo"]" />
+        <input type="hidden" id="hdnConvenioId" value="0" />
+        <input id="ValidacionCDP" type="hidden" asp-for="ValidacionCDP" />
+        <input id="hdnMontoCDPId" type="hidden" value="@ViewData["MontoCDP"]" />
+        <input type="hidden" id="hdnCSAprobado" />
+
+
+        <partial name="Shared/IdentificacionCompra" model="Model" />
+
+        <br />
+
+        <partial name="Shared/DatosPresupuesto" model="Model" />
+
+        <br />
+
+        @if (CertificadoSaldo) 
+        {
+        <partial name="Shared/DatosConvenio" model="Model" />
+
+        <br />
+        }
+
+       
+
+        <partial name="Shared/DatosMontos" model="Model" />
+
+        <br />
+
+    </form>
+
+    <div class="card bg-light CardTr text-dark d-print-none">
+        <div class="card-body">
+            <h5 class="card-title">Documentos Adjuntos</h5>
+            <button style="display: none" id="btnGuardarArchivo" class="btn btn-primary">
+                Guardar Archivos
+            </button>
+
+
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Archivos</label>
+
+
+                <div class="col-sm-10">
+                    <form id="frmDropZone" asp-action="SubirArchivo" class="dropzone" enctype="multipart/form-data"></form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <partial name="Shared/Bitacora" model="Model" />
+
+    <br />
+    <partial name="Shared/BitacoraArchivos" model="Model" />
+
+    @if (Model != null && esAprobar)
+    {
+        <partial name="Shared/Aprobacion" model="Model.AprobacionActual" /> }
+    else if (esGenerarOC || estaFinalizada)
+    {
+        <partial name="Shared/GenerarOC" model="(OCSolicitudModel) ViewBag.OCSolicitudEntidad" />
+    }
+    else if (esIngresar || esEditar)
+    {
+        <br />
+
+        <div class="row mb-5 d-print-none">
+            <div class=" col-11 col-sm-11">
+                @*<button type="submit" form="frmSolicitud" class="btn btn-primary">@(esEditar ? "Actualizar" : "Ingresar")</button>*@
+
+                <button type="submit" form="frmSolicitud" class="btn btn-primary">
+                    @*<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>*@
+                    @(esEditar ? "Actualizar" : "Ingresar")
+                </button>
+
+                <br />
+                @*<br />
+                    <div class="alert alert-warning" role="alert">
+                        <h5 class="alert-heading"><i class="fas fa-exclamation-triangle"></i> !A tener en consideración!</h5>
+                        <hr>
+                        <p>warning con todas las indicaciones que existan para crear una solicitud</p>
+
+
+                    </div>*@
+            </div>
+        </div>
+    }
+    <div id ="btnsUpdt" style="display: none" >
+        <input id="hdnPuedeActualizar" type="hidden" value="@ViewData["hdnPuedeActualizar"]" />
+    <br />
+    <button id="btnModificarSolicitud" style="display: none" class="btn btn-primary">
+          Modificar Solicitud </button>
+     <button id="btnHabilitarCampos" class="btn btn-outline-success">
+          Habilitar Campos</button>
+    </div>
+
+
+</div>
+@section Scripts{
+    <script>
+
+        Index = function () {
+            
+            $(document).ready(function () {
+                
+            });
+
+
+            return {
+                urlGetContraparteTecnica: "@Url.Action(nameof(SolicitudController.GetContraparteTecnica), "Solicitud")",
+                urlGetSector: "@Url.Action(nameof(SolicitudController.GetSector), "Solicitud")",
+                urlGetSectorConPresupuesto: "@Url.Action(nameof(SolicitudController.GetSectorConPresupuesto), "Solicitud")",
+                urlGuardarCampoPresupuesto: "@Url.Action(nameof(SolicitudController.DatoPresupuesto), "Solicitud")",
+                urlGuardarGlosaCS: "@Url.Action(nameof(SolicitudController.GlosaTransferencia), "Solicitud")",
+                urlGetExtraPresupuestario: "@Url.Action(nameof(SolicitudController.ExtraPresupuestario), "Solicitud")",
+
+                urlGetTipoMoneda: "@Url.Action(nameof(SolicitudController.GetTipoMoneda), "Solicitud")",
+                @*urlGetProgramaPresupuestario: "@Url.Action(nameof(SolicitudController.GetProgramaPresupuestario), "Solicitud")",*@
+                urlGetConceptoPresupuestario: "@Url.Action(nameof(SolicitudController.GetConceptoPresupuestario), "Solicitud")",
+                urlGuardar: "@Url.Action(nameof(SolicitudController.IngresarSolicitud), "Solicitud")",
+                urlModify: "@Url.Action(nameof(SolicitudController.ActualizaSolicitud), "Solicitud")",
+                
+                urlDescargar: "@Url.Action(nameof(SolicitudController.DescargarArchivo), "Solicitud")",
+                urlVer: "@Url.Action(nameof(SolicitudController.VerArchivo), "Solicitud")",
+                urlEliminarArchivo: "@Url.Action(nameof(SolicitudController.EliminarArchivo), "Solicitud")",
+                urlRechazar: "@Url.Action(nameof(SolicitudController.RechazarSolicitud), "Solicitud")",
+                urlAprobarSolicitud: "@Url.Action(nameof(SolicitudController.AprobarSolicitud), "Solicitud")",
+                urlGenerarOC: "@Url.Action(nameof(SolicitudController.GenerarOC), "Solicitud")",
+                urlValidarOC: "@Url.Action(nameof(SolicitudController.ValidarOC), "Solicitud")",
+                urlGuardarOC: "@Url.Action(nameof(SolicitudController.GuardarOC), "Solicitud")",
+                urlAprobarCDP: "@Url.Action(nameof(SolicitudController.AprobarCDP), "Solicitud")",
+                urlAprobarCS1: "@Url.Action(nameof(SolicitudController.AprobarCS1), "Solicitud")",
+                urlAprobarCS2: "@Url.Action(nameof(SolicitudController.AprobarCS2), "Solicitud")",
+                urlGetProgramaPresupuestario: "@Url.Action(nameof(SolicitudController.ProgramaPresupuestarioForSelect), "Solicitud")",
+
+                urlAprobaciones: "@Url.Action(nameof(SolicitudController.AprobacionesBita), "Solicitud")",
+                urlBitacora: "@Url.Action(nameof(SolicitudController.Bitacora), "Solicitud")",
+                urlBitacoraArchivos: "@Url.Action(nameof(SolicitudController.BitacoraArchivo), "Solicitud")",
+                urlBitacoraEstado: "@Url.Action(nameof(SolicitudController.BitacoraEstado), "Solicitud")",
+
+                urlDetalleSolicitud: "@Url.Action(nameof(SolicitudController.FindDetalleBySolicitudId), "Solicitud")",
+                urlGuardarArchivo: "@Url.Action(nameof(SolicitudController.GuardarArchivo), "Solicitud")",
+                urlGetDescargarCS: "@Url.Action(nameof(SolicitudController.GetDescargaCS), "Solicitud")",
+                urlGetDescargarCDP: "@Url.Action(nameof(SolicitudController.GetDescargaCDP), "Solicitud")",
+
+            }
+
+        }();
+
+    </script>
+
+    <script src="~/lib/dropzone-5.7.0/dist/dropzone.js"></script>
+
+    <script src="~/lib/Inputmask/dist/jquery.inputmask.js"></script>
+
+    <script src="~/js/jquery.rut.js"></script>
+    <script type="text/javascript" src="~/js/printThis.js"></script>
+
+    <script src="~/js/DropzoneConfig.js" asp-append-version="true"></script>
+
+    <script src="~/js/Solicitud/_Index.js" asp-append-version="true"></script>
+
+    <script src="~/js/Solicitud/Aprobacion.js" asp-append-version="true"></script>
+    @if (esGenerarOC)
+    {
+    <script src="~/js/Solicitud/GenerarOC.js" asp-append-version="true"></script>}
+
+    <script type="text/javascript" src="~/js/BackOffice/_AjustarCDP.js" asp-append-version="true"></script>
+}
+
+
